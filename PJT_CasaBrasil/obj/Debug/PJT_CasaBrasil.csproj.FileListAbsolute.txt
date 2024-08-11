@@ -1,0 +1,15 @@
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\PJT_CasaBrasil.exe.config
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\PJT_CasaBrasil.exe
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\PJT_CasaBrasil.pdb
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\FormsToolkit.dll
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\FormsToolkit.pdb
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\FormsToolkit.xml
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.csproj.AssemblyReference.cache
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.Form1.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.Form3.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.Properties.Resources.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.csproj.GenerateResource.cache
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.csproj.CoreCompileInputs.cache
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_Casa.F82826C4.Up2Date
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.exe
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.pdb

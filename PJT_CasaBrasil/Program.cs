@@ -1,22 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace PJT_CasaBrasil
 {
     internal static class Program
     {
-        /// <summary>
-        /// Ponto de entrada principal para o aplicativo.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            // Criar e exibir o preloader
+            using (Form1 preloader = new Form1())
+            {
+                preloader.ShowDialog(); // Exibe o preloader de forma modal
+            }
+
+            // Criar e exibir o formulário principal após o fechamento do preloader
+            try
+            {
+                Form3 form3 = new Form3();
+                form3.Show();
+
+                // Adicione controles ao mainForm conforme necessário
+
+                Application.Run(form3);
+            }
+            catch (Exception ex)
+            {
+                // Tratar exceção e exibir uma mensagem para o usuário
+                MessageBox.Show($"Ocorreu um erro ao abrir o formulário principal: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
+
+
+
+
+
