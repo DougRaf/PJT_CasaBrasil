@@ -1,24 +1,27 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace PJT_CasaBrasil
 {
+
     public partial class Form3 : Form
     {
+        private string placeholderText1 = "Digite seu usuário..."; // Texto do placeholder
+        private string placeholderText2 = "Digite sua senha..."; // Texto do placeholder
+
         public Form3()
         {
-            InitializeComponent();
+            InitializeComponent();         
+
+            // Configure o TextBox
+            ConfigurePlaceholder(textBox1, placeholderText1);
+            ConfigurePlaceholder(textBox2, placeholderText2);
+            this.ActiveControl = null; // Remove o foco de qualquer controle
         }
 
-        private void label5_Click(object sender, System.EventArgs e)
-        {
+    
 
-        }
-
-        private void label6_Click(object sender, System.EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, System.EventArgs e)
         {
@@ -36,9 +39,52 @@ namespace PJT_CasaBrasil
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void Form3_Load(object sender, EventArgs e)
         {
+            // Configure os TextBox no evento Load do formulário
+            ConfigurePlaceholder(textBox1, placeholderText1);
+            ConfigurePlaceholder(textBox2, placeholderText2);
+            
+        }
 
+
+
+
+
+        private void ConfigurePlaceholder(TextBox textBox, string placeholder)
+        {
+            textBox.Text = placeholder;
+            textBox.ForeColor = Color.Gray;
+            textBox.Font = new Font(textBox.Font, FontStyle.Italic);
+
+            textBox.Enter += (s, e) =>
+            {
+                if (textBox.Text == placeholder)
+                {
+                    textBox.Text = "";
+                    textBox.ForeColor = Color.Black;
+                    textBox.Font = new Font(textBox.Font, FontStyle.Regular);
+                }
+            };
+
+            textBox.Leave += (s, e) =>
+            {
+                if (string.IsNullOrEmpty(textBox.Text))
+                {
+                    textBox.Text = placeholder;
+                    textBox.ForeColor = Color.Gray;
+                    textBox.Font = new Font(textBox.Font, FontStyle.Italic);
+                }
+            };
+
+
+        }
+
+        private void Form3_Activated(object sender, EventArgs e)
+        {
+            this.ActiveControl = null; // Remove o foco de qualquer controle
         }
     }
 }
+
+
