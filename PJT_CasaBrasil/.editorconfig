@@ -1,0 +1,13 @@
+﻿[*.cs]
+
+# IDE0058: O valor da expressão nunca é usado
+csharp_style_unused_value_expression_statement_preference = discard_variable
+
+# IDE0021: Usar o corpo do bloco para construtor
+csharp_style_expression_bodied_constructors = false
+
+# IDE0021: Usar o corpo do bloco para construtor
+dotnet_diagnostic.IDE0021.severity = none
+
+# IDE0008: Usar o tipo explícito
+csharp_style_var_elsewhere = true
