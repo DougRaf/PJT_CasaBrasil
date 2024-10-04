@@ -27,5 +27,18 @@ namespace PJT_CasaBrasil
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            // Criar e exibir o formulário principal após o fechamento do preloader
+          
+                Form2 form2 = new Form2();
+                form2.ShowDialog();
+
+                // Adicione controles ao mainForm conforme necessário
+
+      
+        }
     }
 }

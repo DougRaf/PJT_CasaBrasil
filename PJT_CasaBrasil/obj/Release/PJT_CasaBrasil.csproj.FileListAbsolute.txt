@@ -4,7 +4,6 @@ C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Rele
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ja\PJT_CasaBrasil.resources.dll
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.dll
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\Microsoft.Win32.Registry.dll
-C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\MySql.Data.dll
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Asio.dll
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Core.dll
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.dll
@@ -29,7 +28,6 @@ C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Rele
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.AssemblyReference.cache
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form1.resources
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form2.resources
-C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form3.resources
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form4.resources
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form7.resources
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Properties.Resources.resources
@@ -40,3 +38,102 @@ C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Rele
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_Casa.F82826C4.Up2Date
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.exe
 C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.pdb
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.exe.config
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.exe
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.pdb
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ja\PJT_CasaBrasil.resources.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\Microsoft.Win32.Registry.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Asio.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Core.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Midi.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Wasapi.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinForms.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinMM.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.AccessControl.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.Principal.Windows.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.pdb
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\Microsoft.Win32.Registry.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Asio.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Core.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Midi.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Wasapi.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinForms.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinMM.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.AccessControl.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.Principal.Windows.xml
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form1.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form4.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form7.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Properties.Resources.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Strings.ja.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.GenerateResource.cache
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\ja\PJT_CasaBrasil.resources.dll
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_Casa.F82826C4.Up2Date
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.exe
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.pdb
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form2.resources
+C:\Users\User\Desktop\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form9.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Memory.dll
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Numerics.Vectors.dll
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Buffers.dll
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form9.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form3.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form10.resources
+C:\Users\esqui\OneDrive\Área de Trabalho\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.FormSucesso.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.exe.config
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.exe
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\PJT_CasaBrasil.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ja\PJT_CasaBrasil.resources.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\Microsoft.Win32.Registry.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Asio.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Core.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Midi.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Wasapi.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinForms.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinMM.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.AccessControl.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.Principal.Windows.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Memory.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Numerics.Vectors.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Buffers.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\FormsToolkit.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\Microsoft.Win32.Registry.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Asio.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Core.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Midi.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.Wasapi.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinForms.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\NAudio.WinMM.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.AccessControl.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Security.Principal.Windows.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.AssemblyReference.cache
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form1.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form10.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form2.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form3.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form4.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form7.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form9.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.FormSucesso.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Properties.Resources.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Strings.ja.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.GenerateResource.cache
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.csproj.CoreCompileInputs.cache
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\ja\PJT_CasaBrasil.resources.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_Casa.F82826C4.Up2Date
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.exe
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form5.resources
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Release\PJT_CasaBrasil.Form11.resources

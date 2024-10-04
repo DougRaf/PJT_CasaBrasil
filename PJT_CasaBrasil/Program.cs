@@ -12,7 +12,8 @@ namespace PJT_CasaBrasil
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Criar e exibir o preloader
+
+                  // Criar e exibir o preloader
             using (Form1 preloader = new Form1())
             {
                 preloader.ShowDialog(); // Exibe o preloader de forma modal
@@ -21,12 +22,10 @@ namespace PJT_CasaBrasil
             // Criar e exibir o formulário principal após o fechamento do preloader
             try
             {
-                Form3 form3 = new Form3();
-                form3.Show();
+           
 
                 // Adicione controles ao mainForm conforme necessário
-
-                Application.Run(form3);
+                Application.Run(new Form2());
             }
             catch (Exception ex)
             {

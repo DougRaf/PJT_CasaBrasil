@@ -35,10 +35,16 @@ namespace PJT_CasaBrasil
             {
                 timer.Stop(); // Para o timer quando a barra atinge 100%
                 this.Close(); // Fecha o formulário de preloader
+
             }
         }
 
         private void progressBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

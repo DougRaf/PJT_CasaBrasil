@@ -1,34 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using static PJT_CasaBrasil.Form2;
 
 namespace PJT_CasaBrasil
 {
-
     public partial class Form3 : Form
     {
-        private string placeholderText1 = "Digite seu usuário..."; // Texto do placeholder
-        private string placeholderText2 = "Digite sua senha..."; // Texto do placeholder
-
         public Form3()
         {
-            InitializeComponent();         
-
-            // Configure o TextBox
-            ConfigurePlaceholder(textBox1, placeholderText1);
-            ConfigurePlaceholder(textBox2, placeholderText2);
-            this.ActiveControl = null; // Remove o foco de qualquer controle
+            InitializeComponent();
+            this.Load += new EventHandler(Form3_Load);
+            textBox1.Text = UserSession.Username;
         }
 
-    
-
-
-        private void button1_Click(object sender, System.EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                Form2 form2 = new Form2();
-                form2.Show();
+                Form7 form7 = new Form7();
+                form7.Show();
 
                 // Adicione controles ao mainForm conforme necessário                
             }
@@ -41,50 +38,15 @@ namespace PJT_CasaBrasil
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            // Configure os TextBox no evento Load do formulário
-            ConfigurePlaceholder(textBox1, placeholderText1);
-            ConfigurePlaceholder(textBox2, placeholderText2);
-            
-        }
+            maskedTextBox1.Mask = "00/00/0000 00:00";
 
+            // Atualiza o conteúdo do MaskedTextBox com a data e hora atuais
+            maskedTextBox1.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
-
-
-
-        private void ConfigurePlaceholder(TextBox textBox, string placeholder)
-        {
-            textBox.Text = placeholder;
-            textBox.ForeColor = Color.Gray;
-            textBox.Font = new Font(textBox.Font, FontStyle.Italic);
-
-            textBox.Enter += (s, e) =>
-            {
-                if (textBox.Text == placeholder)
-                {
-                    textBox.Text = "";
-                    textBox.ForeColor = Color.Black;
-                    textBox.Font = new Font(textBox.Font, FontStyle.Regular);
-                }
-            };
-
-            textBox.Leave += (s, e) =>
-            {
-                if (string.IsNullOrEmpty(textBox.Text))
-                {
-                    textBox.Text = placeholder;
-                    textBox.ForeColor = Color.Gray;
-                    textBox.Font = new Font(textBox.Font, FontStyle.Italic);
-                }
-            };
-
+            maskedTextBox1.ReadOnly = true;
 
         }
 
-        private void Form3_Activated(object sender, EventArgs e)
-        {
-            this.ActiveControl = null; // Remove o foco de qualquer controle
-        }
+
     }
 }
-
-
