@@ -69,12 +69,13 @@ namespace PJT_CasaBrasil
                             }
                             else
                             {
-                                MessageBox.Show("Senha incorreta!");
+                                MessageBox.Show("Senha Incorreta! Tente outra vez!!!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return; // Sai do método se houver campos vazios
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Usuário não encontrado!");
+                            MessageBox.Show("Usuário não encontrado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }

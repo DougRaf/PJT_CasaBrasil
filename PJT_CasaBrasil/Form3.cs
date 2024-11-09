@@ -26,6 +26,36 @@ namespace PJT_CasaBrasil
             {
                 Form7 form7 = new Form7();
                 form7.Show();
+                this.Hide();
+
+                // Verifica se há pelo menos 2 monitores conectados
+                if (Screen.AllScreens.Length > 1)
+                {
+                    // Pega o segundo monitor (índice 1)
+                    Screen secondScreen = Screen.AllScreens[1];
+
+                    // Cria uma nova instância de Form12
+                    Form12 form12 = new Form12();
+
+                    // Define a posição do Form12 no monitor secundário
+                    form12.StartPosition = FormStartPosition.Manual;
+
+                    // Define a localização no segundo monitor
+                    form12.Location = secondScreen.Bounds.Location;
+
+                    // Define o tamanho do Form12 para preencher o monitor secundário
+                    form12.Size = secondScreen.Bounds.Size;
+
+                    // Exibe o Form12 em modo maximizado
+                    form12.WindowState = FormWindowState.Maximized;
+
+                    // Exibe o formulário
+                    form12.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Não há múltiplos monitores conectados.");
+                }
 
                 // Adicione controles ao mainForm conforme necessário                
             }
@@ -47,6 +77,9 @@ namespace PJT_CasaBrasil
 
         }
 
+        private void label6_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

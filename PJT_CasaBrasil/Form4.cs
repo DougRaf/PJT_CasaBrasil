@@ -33,10 +33,11 @@ namespace PJT_CasaBrasil
             string nomeProduto = txtNomeProduto.Text;
             string codigoBarras = txtCodigoBarra.Text;
             string categoria = txtCategoria.Text;
+            string quantidade = txtqtd.Text;
             string dataEntrada = txtDataEntrada.Text;
             string dataVencimento = txtdatavencimento.Text;            
             string precoCusto = txtPrecoCusto.Text;
-            string precoVenda =txtPrecoVenda.Text;
+            string precoVenda = txtPrecoVenda.Text;
             string imposto = txtImposto.Text;
             string observacoes = txtObservacoes.Text;
 
@@ -44,6 +45,7 @@ namespace PJT_CasaBrasil
             if (string.IsNullOrWhiteSpace(nomeProduto) ||
                 string.IsNullOrWhiteSpace(codigoBarras) ||
                 string.IsNullOrWhiteSpace(categoria) ||
+                string.IsNullOrWhiteSpace(quantidade) ||
                 string.IsNullOrWhiteSpace(dataVencimento) ||
                 string.IsNullOrWhiteSpace(precoCusto) ||
                 string.IsNullOrWhiteSpace(precoVenda) ||
@@ -64,8 +66,8 @@ namespace PJT_CasaBrasil
 
                     conn.Open();
 
-                    string query = "INSERT INTO produto (nome_produto, codigo_barras,categoria, data_entrada, data_vencimento, preco_custo, preco_venda, imposto, observacoes) " +
-                                   "VALUES (@nome_produto, @codigo_barras, @categoria, @data_entrada, @data_vencimento, @preco_custo, @preco_venda, @imposto, @observacoes)";
+                    string query = "INSERT INTO produto (nome_produto, codigo_barras,categoria, quantidade, data_entrada, data_vencimento, preco_custo, preco_venda, imposto, observacoes) " +
+                                   "VALUES (@nome_produto, @codigo_barras, @categoria, @quantidade, @data_entrada, @data_vencimento, @preco_custo, @preco_venda, @imposto, @observacoes)";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -73,6 +75,7 @@ namespace PJT_CasaBrasil
                         cmd.Parameters.AddWithValue("@nome_produto", nomeProduto);
                         cmd.Parameters.AddWithValue("@codigo_barras", codigoBarras);
                         cmd.Parameters.AddWithValue("@categoria", categoria);
+                        cmd.Parameters.AddWithValue("@quantidade", quantidade);
                         cmd.Parameters.AddWithValue("@data_entrada", dataEntrada);
                         cmd.Parameters.AddWithValue("@data_vencimento", dataVencimento);
                         cmd.Parameters.AddWithValue("@preco_custo", precoCusto);
@@ -92,6 +95,7 @@ namespace PJT_CasaBrasil
                         txtDataEntrada.Clear();
                         txtdatavencimento.Clear();
                         txtCategoria.Clear();
+                        txtqtd.Clear();
                         txtPrecoCusto.Clear();
                         txtPrecoVenda.Clear();
                         txtImposto.Clear();
@@ -112,6 +116,7 @@ namespace PJT_CasaBrasil
             txtCodigoBarra.Clear();           
             txtdatavencimento.Clear();
             txtCategoria.Clear();
+            txtqtd.Clear();
             txtPrecoCusto.Clear();
             txtPrecoVenda.Clear();
             txtImposto.Clear();
@@ -127,11 +132,27 @@ namespace PJT_CasaBrasil
         private void Form4_Load(object sender, EventArgs e)
         {
             txtDataEntrada.Mask = "00/00/0000 00:00";
+     
 
             // Atualiza o conteúdo do MaskedTextBox com a data e hora atuais
             txtDataEntrada.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
             txtDataEntrada.ReadOnly = true;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

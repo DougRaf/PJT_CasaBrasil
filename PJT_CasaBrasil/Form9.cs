@@ -151,6 +151,7 @@ namespace PJT_CasaBrasil
         {
             Form4 form4 = new Form4();
             form4.Show();
+            this.Hide();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -164,19 +165,13 @@ namespace PJT_CasaBrasil
 
         private void button5_Click(object sender, EventArgs e)
         {
-            
-                Form5 form5 = new Form5();
-                form5.Show();
-
-
-
-
-            }
+           Form5 form5 = new Form5();
+           form5.Show();
+        }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Form11 form11 = new Form11();
-            form11.Show();
+       
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -186,7 +181,8 @@ namespace PJT_CasaBrasil
 
         private void button7_Click(object sender, EventArgs e)
         {
-
+            Form11 form11 = new Form11();
+            form11.Show();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -195,7 +191,7 @@ namespace PJT_CasaBrasil
             audioFileReader = new AudioFileReader("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\hover.mp3"); // Substitua com o caminho relativo ao arquivo
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
-
+            this.Hide();
 
             try
             {
