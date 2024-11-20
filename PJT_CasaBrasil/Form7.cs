@@ -1,15 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PJT_CasaBrasil
@@ -20,17 +14,16 @@ namespace PJT_CasaBrasil
         private int contadorItens = 0; // Contador de itens encontrados
         private DataTable dataTable;
         private int itemCount;
+        private decimal totalVenda = 0; // Para armazenar o total das vendas
+
 
         public Form7()
         {
             InitializeComponent();
             txtCodigoDeBarras.TextChanged += TxtCodigoDeBarras_TextChanged;
-            // Para esconder a barra de tarefas (opcional, se for necessário)
 
             InitializeDataTable();
             dataGrid1.DataSource = dataTable;
-
-         
 
             itemCount = 0; // Inicializa o contador
             UpdateItemCount();
@@ -48,34 +41,41 @@ namespace PJT_CasaBrasil
             dataTable.Columns.Add("Taxa", typeof(string));
         }
 
+
+        public static class Totalcase
+        {
+            public static string Total { get; set; }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             // Cria uma instância de Form2
             Form12 form2 = new Form12();
-
-            // Passa o texto do TextBox para Form2
-
-           // form2.DataToDisplay = dataTable.Copy();
-
+            // form2.DataToDisplay = dataTable.Copy();
         }
-
 
         private void TxtCodigoDeBarras_TextChanged(object sender, EventArgs e)
         {
-            // Verifica se o TextBox não está vazio
             if (!string.IsNullOrWhiteSpace(txtCodigoDeBarras.Text))
             {
                 // Chama o método para buscar os dados
                 BuscarProduto(txtCodigoDeBarras.Text);
-       
-                // Adiciona os dados dos TextBoxes ao DataTable
+
+                // Se for a primeira inserção ou após o cancelamento, reiniciar o contador
+                if (contadorItens == 0)
+                {
+                    dataTable.Clear(); // Limpa os itens anteriores
+                }
+
+                // Adiciona os dados dos TextBoxes ao DataTable se todos os campos estiverem preenchidos
                 if (!string.IsNullOrWhiteSpace(txtNumeracao.Text) &&
                     !string.IsNullOrWhiteSpace(txtCodigoDeBarras.Text) &&
                     !string.IsNullOrWhiteSpace(txtNomeProduto.Text) &&
                     !string.IsNullOrWhiteSpace(txtCategoria.Text) &&
-                     !string.IsNullOrWhiteSpace(txtPrecoVenda.Text) &&
-                     !string.IsNullOrWhiteSpace(txtImposto.Text))
+                    !string.IsNullOrWhiteSpace(txtPrecoVenda.Text) &&
+                    !string.IsNullOrWhiteSpace(txtImposto.Text))
                 {
+                    // Adiciona a nova linha ao DataTable
                     dataTable.Rows.Add(
                         txtNumeracao.Text,
                         txtCodigoDeBarras.Text,
@@ -85,51 +85,44 @@ namespace PJT_CasaBrasil
                         txtImposto.Text
                     );
 
+                    // Incrementa o contador de itens
+                    contadorItens++;
+
+                    // Atualiza o contador de itens na interface
+                    UpdateItemCount();
+
+                    // Atualiza o total de vendas
+                    AtualizarTotalVenda();
+
+                    // Limpa os campos de texto para o próximo item
                     ClearTextBoxes();
 
-
-                    // Caminho do arquivo TXT onde os dados serão salvos
+                    // Caminho do arquivo de texto onde os dados serão salvos
                     string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
 
                     try
                     {
-                        // Verifica se o diretório existe e, caso contrário, cria o diretório
+                        // Verifica se o diretório existe, caso contrário, cria o diretório
                         string directoryPath = Path.GetDirectoryName(filePath);
                         if (!Directory.Exists(directoryPath))
                         {
                             Directory.CreateDirectory(directoryPath);
                         }
 
-                        // Obtém o conteúdo da DataTable
+                        // Converte os dados do DataTable para um formato de texto
                         string content = GetDataTableContent(dataTable);
 
                         // Salva o conteúdo no arquivo
                         SaveToFile(filePath, content);
-
-                        // Mensagem de sucesso
-                       // MessageBox.Show("Dados salvos com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (IOException ioEx)
                     {
-                        // Exceção específica para problemas com arquivos
                         MessageBox.Show($"Erro ao salvar os dados no arquivo: {ioEx.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (UnauthorizedAccessException uaEx)
-                    {
-                        // Exceção caso o aplicativo não tenha permissão para acessar o arquivo ou diretório
-                        MessageBox.Show($"Erro de permissão: {uaEx.Message}", "Erro de Permissão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch (Exception ex)
                     {
-                        // Exceção genérica para outros tipos de erros
                         MessageBox.Show($"Erro inesperado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
-
-                }
-                else
-                {
-                   // MessageBox.Show("Por favor, preencha todos os campos corretamente.");
                 }
             }
         }
@@ -142,7 +135,6 @@ namespace PJT_CasaBrasil
                 {
                     conn.Open();
 
-                    // Primeiro, buscar o produto
                     string query = "SELECT id, nome_produto, categoria, preco_venda, imposto, quantidade FROM produto WHERE codigo_barras = @codigo";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -152,45 +144,29 @@ namespace PJT_CasaBrasil
                         {
                             if (reader.Read())
                             {
-                                // Exibir os dados no TextBox
                                 txtNomeProduto.Text = reader["nome_produto"].ToString();
                                 txtCategoria.Text = reader["categoria"].ToString();
                                 txtPrecoVenda.Text = reader["preco_venda"].ToString();
                                 txtImposto.Text = reader["imposto"].ToString();
-                               
+
                                 itemCount++;
                                 UpdateItemCount();
 
-                                // Atualizar a quantidade
                                 int quantidadeAtual = Convert.ToInt32(reader["quantidade"]);
-                                int produtoId = Convert.ToInt32(reader["id"]); // Armazenar o ID do produto
+                                int produtoId = Convert.ToInt32(reader["id"]);
 
                                 if (quantidadeAtual > 0)
                                 {
-                                    quantidadeAtual--; // Diminuir a quantidade
-
-                                    // Fechar o DataReader antes de atualizar
+                                    quantidadeAtual--;
                                     reader.Close();
 
-                                    // Executar o UPDATE
                                     string updateSql = "UPDATE produto SET quantidade = @novaQuantidade WHERE id = @idDoProduto";
                                     using (MySqlCommand updateCmd = new MySqlCommand(updateSql, conn))
                                     {
                                         updateCmd.Parameters.AddWithValue("@novaQuantidade", quantidadeAtual);
-                                        updateCmd.Parameters.AddWithValue("@idDoProduto", produtoId); // Usar o ID armazenado
+                                        updateCmd.Parameters.AddWithValue("@idDoProduto", produtoId);
 
-                                        int rowsAffected = updateCmd.ExecuteNonQuery();
-                                        Console.WriteLine($"{rowsAffected} linha(s) atualizada(s).");
-
-                                        // Confirmação para o usuário
-                                        if (rowsAffected > 0)
-                                        {
-                                           // MessageBox.Show("Quantidade atualizada com sucesso.");
-                                        }
-                                        else
-                                        {
-                                          //  MessageBox.Show("Nenhuma atualização realizada.");
-                                        }
+                                        updateCmd.ExecuteNonQuery();
                                     }
                                 }
                                 else
@@ -209,10 +185,8 @@ namespace PJT_CasaBrasil
                 {
                     MessageBox.Show("Erro: " + ex.Message);
                 }
-            } // A conexão é fechada automaticamente aqui
+            }
         }
-
-
 
         private void ClearTextBoxes()
         {
@@ -224,204 +198,141 @@ namespace PJT_CasaBrasil
             txtImposto.Clear();
         }
 
-        private void UpdateQuantidade(MySqlConnection conn, string codigoDeBarras, int quantidadeAtual)
-        {
-            conn.Close(); // Fecha a conexão
-            string updateQuery = "UPDATE produto SET quantidade = @quantidade WHERE codigo_barras = @codigo";
-            using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn))
-            {
-                updateCmd.Parameters.AddWithValue("@quantidade", quantidadeAtual);
-                updateCmd.Parameters.AddWithValue("@codigo", codigoDeBarras);
-                updateCmd.ExecuteNonQuery();
-            }
-        }
-
         private void UpdateItemCount()
         {
-            // Atualiza o TextBox com a contagem atual de itens
             txtNumeracao.Text = itemCount.ToString();
         }
 
-
-
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-     
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-         
-        }
-
-        private void Form7_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtCategoria_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtNomeProduto_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGrid1_Navigate(object sender, NavigateEventArgs ne)
-        {
-
-        }
-
-        private void textBox9_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtImposto_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtPrecoVenda_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtNumeracao_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtCodigoDeBarras_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            // Verifique se o campo de numeração não está vazio
-            if (!string.IsNullOrWhiteSpace(txtNumeracao.Text))
-            {
-                // Obter o valor da numeração
-                string numeracao = txtNumeracao.Text;
-
-                // Acessa o DataTable que está vinculado ao DataGridView
-                if (dataGrid1.DataSource != null)
-                {
-                    DataTable dataTable = (DataTable)dataGrid1.DataSource;
-
-                    // Encontrar a linha que corresponde à numeração fornecida
-                    var rowToDelete = dataTable.AsEnumerable()
-                                               .FirstOrDefault(row => row.Field<string>("Item") == numeracao);
-
-                    if (rowToDelete != null)
-                    {
-                        // Remover a linha do DataTable
-                        dataTable.Rows.Remove(rowToDelete);
-
-                        // Exibir uma mensagem informando que a linha foi excluída
-                        MessageBox.Show("Linha excluída com sucesso!");
-                    }
-                    else
-                    {
-                        // Caso não encontre a linha com a numeração fornecida
-                        MessageBox.Show("Nenhuma linha encontrada com a numeração fornecida.");
-                    }
-                }
-            }
-            else
-            {
-                // Caso o campo de numeração esteja vazio
-                MessageBox.Show("Por favor, insira uma numeração válida.");
-            }
-
-
-
-
-
-
-
-        }
-
-        // Método para montar o conteúdo do arquivo a partir de um DataTable
         private string GetDataTableContent(DataTable dataTable)
         {
             StringBuilder sb = new StringBuilder();
 
-            // Adiciona o cabeçalho da DataTable (nomes das colunas)
             sb.AppendLine(string.Join("\t", dataTable.Columns.Cast<DataColumn>()
                                         .Select(col => col.ColumnName)));
 
-            // Adiciona os dados das linhas
             foreach (DataRow row in dataTable.Rows)
             {
                 var rowData = row.ItemArray.Select(item => item?.ToString() ?? string.Empty).ToArray();
                 sb.AppendLine(string.Join("\t", rowData));
-
-
-
             }
-
-            // Para cada coluna do DataGridView
-          
 
             return sb.ToString();
         }
 
-        // Método para salvar o conteúdo no arquivo
         private void SaveToFile(string filePath, string content)
         {
             File.WriteAllText(filePath, content);
         }
 
+        private void CancelarVenda()
+        {
+            // Restaurar a quantidade dos produtos no banco de dados
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string codigoBarras = row["Código"].ToString();
+                    int quantidadeVendida = 1;
+
+                    string updateQuery = "UPDATE produto SET quantidade = quantidade + @quantidadeVendida WHERE codigo_barras = @codigo";
+                    using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn))
+                    {
+                        updateCmd.Parameters.AddWithValue("@quantidadeVendida", quantidadeVendida);
+                        updateCmd.Parameters.AddWithValue("@codigo", codigoBarras);
+
+                        updateCmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            // Limpar o DataTable
+            dataTable.Clear();
+            contadorItens = 0;
+            UpdateItemCount();
+            txtNumeracao.Clear();
+
+            // Apagar o conteúdo do arquivo de texto
+            string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+            File.WriteAllText(filePath, string.Empty);
+
+            // Fechar o formulário atual
+            this.Close();
+
+            // Criar uma nova instância do Form7 e reabrir
+            Form7 novoFormulario = new Form7();
+            novoFormulario.Show();
+
+            // Mensagem informando que a venda foi cancelada
+            MessageBox.Show("Venda cancelada com sucesso!", "Cancelamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
 
+        // Evento do botão de cancelamento (manter o nome do evento conforme solicitado)
+        private void button6_Click(object sender, EventArgs e)
+        {
+            CancelarVenda();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // Aqui você pode adicionar o código para outras ações que o botão 5 deve executar.
+
+            Totalcase.Total = textBox9.Text;
+            MessageBox.Show("Erro ao converter valor para decimal: " + Totalcase.Total, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+      
+
+        private void AtualizarTotalVenda()
+        {
+            totalVenda = 0;  // Inicializa o total da venda
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                string precoTexto = row["Valor"].ToString().Trim();  // Pega o valor da coluna "Valor" e remove espaços em branco
+
+                // Remover qualquer caractere não numérico, como vírgulas, se necessário
+                precoTexto = precoTexto.Replace(",", ".");  // Substitui vírgula por ponto
+
+                // Tente converter para decimal
+                if (decimal.TryParse(precoTexto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
+                {
+                    // Adiciona o valor convertido ao totalVenda
+                    totalVenda += precoVenda;
+                }
+                else
+                {
+                    // Caso não seja possível converter o valor, exibe mensagem de erro
+                    MessageBox.Show("Erro ao converter valor para decimal: " + precoTexto, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // Verifica se o valor totalVenda é inteiro
+            if (totalVenda == Math.Floor(totalVenda))
+            {
+                // Se for inteiro, não mostra casas decimais
+                textBox9.Text = totalVenda.ToString("0");
+            }
+            else
+            {
+                // Se não for inteiro, exibe com duas casas decimais
+                textBox9.Text = totalVenda.ToString("F2");
+            }
+            // Salva na classe estática
+
+          
+
+        }
+
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            // Chama o método para atualizar o total de vendas
+            AtualizarTotalVenda();
+
+            
+        }
     }
-
-
-
- 
 }
-    
-
-

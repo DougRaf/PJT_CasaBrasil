@@ -1,6 +1,3 @@
 Item	Código	Produto	Descrição	Valor	Taxa
-1	4902201429337	prestigio	DOCES	380	8%
-3	4902201429337	prestigio	DOCES	380	8%
-4	4902201429337	prestigio	DOCES	380	8%
-5	4902201429337	prestigio	DOCES	380	8%
-6	4902201429337	prestigio	DOCES	380	8%
+1	44444	ddsdsd	fddfdff	444	444
+2	44444	ddsdsd	fddfdff	444	444

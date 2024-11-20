@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 
@@ -46,6 +47,33 @@ namespace PJT_CasaBrasil
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                // Caminho para o executável do MAMP
+                string mampPath = @"C:\MAMP\MAMP.exe";
+
+                // Configuração do processo
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = mampPath,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                // Inicializando o processo
+                Process process = Process.Start(startInfo);
+
+                if (process != null && !process.HasExited)
+                {
+                    MessageBox.Show("MAMP Server iniciado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao iniciar o MAMP Server:\n" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
     }

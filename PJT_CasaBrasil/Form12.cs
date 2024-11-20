@@ -1,41 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using static PJT_CasaBrasil.Form7;
 
 namespace PJT_CasaBrasil
 {
     public partial class Form12 : Form
     {
+        
         // Propriedade para receber dados de Form1
         public string DataToDisplay { get; set; }
         private DataTable dataTable;
         private Timer timer;
+        private decimal totalVenda = 0; // Para armazenar o total das vendas
 
         public Form12()
         {
             InitializeComponent();
-
+         
             // Configura o Timer para chamar o evento a cada 1 segundo (1000 ms)
             timer = new Timer();
             timer.Interval = 1000; // 1000 ms = 1 segundo
             timer.Tick += Timer_Tick; // Evento quando o tempo expirar
-
+            txtTotal.Text = Totalcase.Total;
         }
-
-    
 
         private void Form12_Load(object sender, EventArgs e)
         {
             txtCodigoDeBarras.Text = DataToDisplay;
+
             // Obtém todos os monitores conectados
             Screen[] screens = Screen.AllScreens;
 
@@ -47,7 +44,6 @@ namespace PJT_CasaBrasil
                 this.Location = new Point(screens[0].Bounds.X, screens[0].Bounds.Y);
                 this.Size = new Size(screens[0].Bounds.Width, screens[0].Bounds.Height); // Ajusta o tamanho
                 this.WindowState = FormWindowState.Maximized; // Maximiza o formulário
-                // this.FormBorderStyle = FormBorderStyle.None; // Remove a borda do formulário
             }
             else
             {
@@ -72,7 +68,6 @@ namespace PJT_CasaBrasil
                 MessageBox.Show("Este aplicativo só pode ser executado no segundo monitor.");
                 this.Close();
             }
-
 
             // Caminho do arquivo de texto
             string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
@@ -159,7 +154,7 @@ namespace PJT_CasaBrasil
             {
                 MessageBox.Show($"Erro inesperado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-    }
+        }
 
         // Método para mostrar o último dado inserido nos TextBoxes
         private void ShowLastInsertedData()
@@ -177,8 +172,8 @@ namespace PJT_CasaBrasil
                 txtCategoria.Text = lastRow["Descrição"].ToString(); // Substitua com o nome real da coluna
                 txtPrecoVenda.Text = lastRow["Valor"].ToString(); // Substitua com o nome real da coluna
                 txtImposto.Text = lastRow["Taxa"].ToString();
+                txtTotal.Text = Totalcase.Total;
             }
-
             else
             {
                 // Caso o DataTable esteja vazio, limpa os TextBoxes
@@ -188,8 +183,15 @@ namespace PJT_CasaBrasil
                 txtCategoria.Clear();
                 txtPrecoVenda.Clear();
                 txtImposto.Clear();
-            } 
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // Aqui você pode adicionar o código para outras ações que o botão 5 deve executar.
+
+
+            MessageBox.Show("Erro ao converter valor para decimal: " + txtImposto.Text, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
-

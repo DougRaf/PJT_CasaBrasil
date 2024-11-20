@@ -93,7 +93,6 @@
             this.button3.TabIndex = 12;
             this.button3.Text = "Fechar venda";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -104,7 +103,6 @@
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Valor";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataGrid1
             // 
@@ -132,11 +130,11 @@
             this.dataGrid1.ParentRowsForeColor = System.Drawing.Color.MidnightBlue;
             this.dataGrid1.ParentRowsVisible = false;
             this.dataGrid1.ReadOnly = true;
+            this.dataGrid1.RowHeadersVisible = false;
             this.dataGrid1.SelectionBackColor = System.Drawing.Color.Teal;
             this.dataGrid1.SelectionForeColor = System.Drawing.Color.PaleGreen;
-            this.dataGrid1.Size = new System.Drawing.Size(483, 379);
+            this.dataGrid1.Size = new System.Drawing.Size(449, 379);
             this.dataGrid1.TabIndex = 4;
-            this.dataGrid1.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGrid1_Navigate);
             // 
             // txtNumeracao
             // 
@@ -144,7 +142,6 @@
             this.txtNumeracao.Name = "txtNumeracao";
             this.txtNumeracao.Size = new System.Drawing.Size(47, 20);
             this.txtNumeracao.TabIndex = 4;
-            this.txtNumeracao.TextChanged += new System.EventHandler(this.txtNumeracao_TextChanged);
             // 
             // txtPrecoVenda
             // 
@@ -152,7 +149,6 @@
             this.txtPrecoVenda.Name = "txtPrecoVenda";
             this.txtPrecoVenda.Size = new System.Drawing.Size(134, 20);
             this.txtPrecoVenda.TabIndex = 7;
-            this.txtPrecoVenda.TextChanged += new System.EventHandler(this.txtPrecoVenda_TextChanged);
             // 
             // txtCategoria
             // 
@@ -160,7 +156,6 @@
             this.txtCategoria.Name = "txtCategoria";
             this.txtCategoria.Size = new System.Drawing.Size(415, 20);
             this.txtCategoria.TabIndex = 5;
-            this.txtCategoria.TextChanged += new System.EventHandler(this.txtCategoria_TextChanged);
             // 
             // label2
             // 
@@ -181,7 +176,6 @@
             this.label3.Size = new System.Drawing.Size(40, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Itens";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // txtImposto
             // 
@@ -189,7 +183,6 @@
             this.txtImposto.Name = "txtImposto";
             this.txtImposto.Size = new System.Drawing.Size(100, 20);
             this.txtImposto.TabIndex = 8;
-            this.txtImposto.TextChanged += new System.EventHandler(this.txtImposto_TextChanged);
             // 
             // txtCodigoDeBarras
             // 
@@ -197,7 +190,6 @@
             this.txtCodigoDeBarras.Name = "txtCodigoDeBarras";
             this.txtCodigoDeBarras.Size = new System.Drawing.Size(173, 20);
             this.txtCodigoDeBarras.TabIndex = 1;
-            this.txtCodigoDeBarras.TextChanged += new System.EventHandler(this.txtCodigoDeBarras_TextChanged_1);
             // 
             // txtNomeProduto
             // 
@@ -205,7 +197,6 @@
             this.txtNomeProduto.Name = "txtNomeProduto";
             this.txtNomeProduto.Size = new System.Drawing.Size(289, 20);
             this.txtNomeProduto.TabIndex = 2;
-            this.txtNomeProduto.TextChanged += new System.EventHandler(this.txtNomeProduto_TextChanged);
             // 
             // label5
             // 
@@ -216,7 +207,6 @@
             this.label5.Size = new System.Drawing.Size(61, 16);
             this.label5.TabIndex = 19;
             this.label5.Text = "Produto";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label7
             // 
@@ -227,7 +217,6 @@
             this.label7.Size = new System.Drawing.Size(78, 16);
             this.label7.TabIndex = 22;
             this.label7.Text = "Descrição";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -238,7 +227,6 @@
             this.label8.Size = new System.Drawing.Size(42, 16);
             this.label8.TabIndex = 24;
             this.label8.Text = "Taxa";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // textBox9
             // 
@@ -246,6 +234,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(124, 20);
             this.textBox9.TabIndex = 9;
+            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             // 
             // label9
@@ -257,7 +246,6 @@
             this.label9.Size = new System.Drawing.Size(157, 29);
             this.label9.TabIndex = 26;
             this.label9.Text = "Total a Pagar";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
@@ -278,7 +266,6 @@
             this.button4.TabIndex = 13;
             this.button4.Text = "Menu Principal";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label11
             // 
@@ -305,7 +292,7 @@
             // 
             this.button6.Location = new System.Drawing.Point(757, 568);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(225, 39);
+            this.button6.Size = new System.Drawing.Size(191, 39);
             this.button6.TabIndex = 15;
             this.button6.Text = "Cancelar venda";
             this.button6.UseVisualStyleBackColor = true;
@@ -316,7 +303,7 @@
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(817, 621);
+            this.label14.Location = new System.Drawing.Point(779, 624);
             this.label14.Name = "label14";
             this.label14.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label14.Size = new System.Drawing.Size(66, 14);
@@ -330,7 +317,7 @@
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(961, 617);
+            this.label15.Location = new System.Drawing.Point(923, 620);
             this.label15.Name = "label15";
             this.label15.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label15.Size = new System.Drawing.Size(29, 22);
@@ -343,7 +330,7 @@
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox2.Image = global::PJT_CasaBrasil.Properties.Resources.logo_244_200;
-            this.pictureBox2.Location = new System.Drawing.Point(880, 623);
+            this.pictureBox2.Location = new System.Drawing.Point(842, 626);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(86, 11);
@@ -356,7 +343,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(499, 31);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(483, 149);
+            this.pictureBox1.Size = new System.Drawing.Size(449, 149);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 17;
             this.pictureBox1.TabStop = false;
@@ -428,7 +415,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
-            this.ClientSize = new System.Drawing.Size(1121, 674);
+            this.ClientSize = new System.Drawing.Size(1073, 674);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -465,7 +452,6 @@
             this.Name = "Form7";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Casa Brasil em Komatsu Ishikawa-Ken / Japão";
-            this.Load += new System.EventHandler(this.Form7_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

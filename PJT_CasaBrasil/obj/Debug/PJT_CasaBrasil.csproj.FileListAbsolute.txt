@@ -207,3 +207,11 @@ C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\ja\PJT_CasaBrasil.resources.dll
 C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_Casa.F82826C4.Up2Date
 C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.exe
 C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Buffers.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Memory.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Numerics.Vectors.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Threading.Tasks.Extensions.xml

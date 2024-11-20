@@ -55,6 +55,8 @@
             this.txtNumeracao = new System.Windows.Forms.TextBox();
             this.dataGrid1 = new System.Windows.Forms.DataGrid();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
@@ -198,14 +200,14 @@
             // 
             // textBox9
             // 
-            this.textBox9.Enabled = false;
             this.textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(592, 340);
+            this.textBox9.Location = new System.Drawing.Point(595, 366);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(154, 31);
             this.textBox9.TabIndex = 70;
             this.textBox9.TabStop = false;
+            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label8
             // 
@@ -263,7 +265,7 @@
             // 
             this.txtImposto.Enabled = false;
             this.txtImposto.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtImposto.Location = new System.Drawing.Point(429, 339);
+            this.txtImposto.Location = new System.Drawing.Point(429, 340);
             this.txtImposto.Name = "txtImposto";
             this.txtImposto.ReadOnly = true;
             this.txtImposto.Size = new System.Drawing.Size(157, 31);
@@ -362,6 +364,24 @@
             this.label1.TabIndex = 63;
             this.label1.Text = "Valor";
             // 
+            // txtTotal
+            // 
+            this.txtTotal.Location = new System.Drawing.Point(595, 340);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.Size = new System.Drawing.Size(124, 20);
+            this.txtTotal.TabIndex = 76;
+            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(22, 399);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(252, 39);
+            this.button5.TabIndex = 77;
+            this.button5.Text = "Retirar Item";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form12
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,6 +390,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(1234, 665);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label8);
@@ -438,5 +460,7 @@
         private System.Windows.Forms.TextBox txtNumeracao;
         private System.Windows.Forms.DataGrid dataGrid1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtTotal;
+        private System.Windows.Forms.Button button5;
     }
 }

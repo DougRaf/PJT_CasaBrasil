@@ -34,6 +34,10 @@ namespace PJT_CasaBrasil
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtPrecoVenda = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -74,9 +78,6 @@ namespace PJT_CasaBrasil
             this.lblDataVencimento = new System.Windows.Forms.Label();
             this.lblPreco = new System.Windows.Forms.Label();
             this.lblImposto = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
@@ -111,6 +112,7 @@ namespace PJT_CasaBrasil
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label12);
@@ -159,6 +161,59 @@ namespace PJT_CasaBrasil
             this.panel1.Size = new System.Drawing.Size(997, 628);
             this.panel1.TabIndex = 17;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Navy;
+            this.button1.Location = new System.Drawing.Point(410, 541);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(366, 26);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Atualizar Dados";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.White;
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(740, 334);
+            this.label10.Name = "label10";
+            this.label10.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.label10.Size = new System.Drawing.Size(36, 30);
+            this.label10.TabIndex = 55;
+            this.label10.Text = "円";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.White;
+            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
+            this.label13.Location = new System.Drawing.Point(410, 334);
+            this.label13.Name = "label13";
+            this.label13.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.label13.Size = new System.Drawing.Size(26, 30);
+            this.label13.TabIndex = 54;
+            this.label13.Text = "¥";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.White;
+            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(740, 297);
+            this.label12.Name = "label12";
+            this.label12.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.label12.Size = new System.Drawing.Size(36, 30);
+            this.label12.TabIndex = 53;
+            this.label12.Text = "円";
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -192,7 +247,6 @@ namespace PJT_CasaBrasil
             this.label9.Size = new System.Drawing.Size(26, 30);
             this.label9.TabIndex = 49;
             this.label9.Text = "¥";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // txtPrecoCusto
             // 
@@ -279,7 +333,7 @@ namespace PJT_CasaBrasil
             this.txtObservacoes.Location = new System.Drawing.Point(410, 408);
             this.txtObservacoes.Multiline = true;
             this.txtObservacoes.Name = "txtObservacoes";
-            this.txtObservacoes.Size = new System.Drawing.Size(366, 77);
+            this.txtObservacoes.Size = new System.Drawing.Size(366, 92);
             this.txtObservacoes.TabIndex = 11;
             // 
             // pictureBox10
@@ -368,9 +422,9 @@ namespace PJT_CasaBrasil
             this.btnCadastrar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCadastrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCadastrar.ForeColor = System.Drawing.Color.Navy;
-            this.btnCadastrar.Location = new System.Drawing.Point(410, 491);
+            this.btnCadastrar.Location = new System.Drawing.Point(410, 506);
             this.btnCadastrar.Name = "btnCadastrar";
-            this.btnCadastrar.Size = new System.Drawing.Size(366, 43);
+            this.btnCadastrar.Size = new System.Drawing.Size(366, 29);
             this.btnCadastrar.TabIndex = 2;
             this.btnCadastrar.Text = "Cadastrar Produtos";
             this.btnCadastrar.UseVisualStyleBackColor = false;
@@ -382,9 +436,9 @@ namespace PJT_CasaBrasil
             this.btnApagar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnApagar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnApagar.ForeColor = System.Drawing.Color.Navy;
-            this.btnApagar.Location = new System.Drawing.Point(410, 540);
+            this.btnApagar.Location = new System.Drawing.Point(410, 573);
             this.btnApagar.Name = "btnApagar";
-            this.btnApagar.Size = new System.Drawing.Size(366, 43);
+            this.btnApagar.Size = new System.Drawing.Size(366, 26);
             this.btnApagar.TabIndex = 0;
             this.btnApagar.Text = "Limpar Dados do Campo";
             this.btnApagar.UseVisualStyleBackColor = false;
@@ -459,7 +513,6 @@ namespace PJT_CasaBrasil
             this.label5.TabIndex = 21;
             this.label5.Text = "Powered by";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // txtImposto
             // 
@@ -526,6 +579,7 @@ namespace PJT_CasaBrasil
             this.txtCodigoBarra.Name = "txtCodigoBarra";
             this.txtCodigoBarra.Size = new System.Drawing.Size(366, 31);
             this.txtCodigoBarra.TabIndex = 1;
+            this.txtCodigoBarra.TextChanged += new System.EventHandler(this.txtCodigoBarra_TextChanged);
             // 
             // lblNomeProduto
             // 
@@ -559,7 +613,6 @@ namespace PJT_CasaBrasil
             this.lblDataVencimento.Size = new System.Drawing.Size(199, 24);
             this.lblDataVencimento.TabIndex = 4;
             this.lblDataVencimento.Text = "Data de Vencimento";
-            this.lblDataVencimento.Click += new System.EventHandler(this.lblDataVencimento_Click);
             // 
             // lblPreco
             // 
@@ -582,46 +635,6 @@ namespace PJT_CasaBrasil
             this.lblImposto.Size = new System.Drawing.Size(94, 25);
             this.lblImposto.TabIndex = 8;
             this.lblImposto.Text = "Imposto";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.White;
-            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(740, 297);
-            this.label12.Name = "label12";
-            this.label12.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.label12.Size = new System.Drawing.Size(36, 30);
-            this.label12.TabIndex = 53;
-            this.label12.Text = "円";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.White;
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
-            this.label13.Location = new System.Drawing.Point(410, 334);
-            this.label13.Name = "label13";
-            this.label13.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.label13.Size = new System.Drawing.Size(26, 30);
-            this.label13.TabIndex = 54;
-            this.label13.Text = "¥";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.White;
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(740, 334);
-            this.label10.Name = "label10";
-            this.label10.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.label10.Size = new System.Drawing.Size(36, 30);
-            this.label10.TabIndex = 55;
-            this.label10.Text = "円";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // Form4
             // 
@@ -704,5 +717,6 @@ namespace PJT_CasaBrasil
         private Label label10;
         private Label label13;
         private Label label12;
+        private Button button1;
     }
 }

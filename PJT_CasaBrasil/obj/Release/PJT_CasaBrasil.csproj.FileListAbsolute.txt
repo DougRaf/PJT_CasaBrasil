@@ -296,3 +296,11 @@ C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\pt\Microsoft.ReportViewer.WebForms.
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ru\Microsoft.ReportViewer.WebForms.resources.dll
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\zh-CHS\Microsoft.ReportViewer.WebForms.resources.dll
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\zh-CHT\Microsoft.ReportViewer.WebForms.resources.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ICSharpCode.SharpZipLib.pdb
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\ICSharpCode.SharpZipLib.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Buffers.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Memory.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Numerics.Vectors.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Release\System.Threading.Tasks.Extensions.xml
