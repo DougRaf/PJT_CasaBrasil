@@ -35,7 +35,7 @@
             this.progressBar.Size = new System.Drawing.Size(237, 23);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 2;
-            this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
+         
             // 
             // lblPercentage
             // 
@@ -118,7 +118,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loading...";
-            this.Load += new System.EventHandler(this.Form1_Load);
+       
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
