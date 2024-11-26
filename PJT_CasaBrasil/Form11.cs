@@ -197,76 +197,99 @@ namespace PJT_CasaBrasil
                 {
                     try
                     {
-                        // Usar PdfSharp corretamente para evitar ambiguidade
                         PdfSharp.Pdf.PdfDocument pdf = new PdfSharp.Pdf.PdfDocument();
                         pdf.Info.Title = "Exportação de Dados";
 
                         PdfSharp.Pdf.PdfPage page = pdf.AddPage();
                         XGraphics gfx = XGraphics.FromPdfPage(page);
                         XFont fontTitle = new XFont("Arial", 20);  // Fonte para o título
-                        XFont fontHeader = new XFont("Arial", 8); // Fonte para o cabeçalho da tabela
+                        XFont fontHeader = new XFont("Arial", 8);  // Fonte para o cabeçalho da tabela
                         XFont fontContent = new XFont("Arial", 5); // Fonte para os dados
+                        XFont fontTotal = new XFont("Arial", 9); // Fonte para os totais (ajustada)
 
-                        // Definir a posição inicial na página
+                        // Posição inicial
                         double posX = 20;
                         double posY = 30;
 
-                        // Carregar e desenhar o logo (imagem) antes do título
-                        string logoPath = "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\casabrasil.png";  // Caminho para a imagem do logo
+                        // Desenhar o logo
+                        string logoPath = "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\casabrasil.png"; // Caminho do logo
                         if (System.IO.File.Exists(logoPath))
                         {
                             XImage logoImage = XImage.FromFile(logoPath);
-                            double logoWidth = 55;  // Largura desejada do logo
-                            double logoHeight = 55; // Altura desejada do logo
-                            gfx.DrawImage(logoImage, posX, posY, logoWidth, logoHeight);  // Reduzir o tamanho da imagem para 50px x 25px
-                            posY += 30;  // Ajuste a posição Y após a imagem
-                        }
-                        else
-                        {
-                            MessageBox.Show("Logo não encontrado no caminho especificado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            gfx.DrawImage(logoImage, posX, posY, 55, 55); // Logo com tamanho reduzido
+                            posX += 70; // Ajustar posição do título
                         }
 
-                        // Calcular a largura do título para centralizá-lo à direita da imagem
-                        string title = "Exportação de Dados";
-                        double titleWidth = gfx.MeasureString(title, fontTitle).Width;
-                        double pageWidth = page.Width;
-                        double imageWidth = 50; // A largura da imagem do logo
-                        double positionXTitle = imageWidth +70;  // A distância da imagem para o título, ajustável
-
-                        // Desenhar o título centralizado à direita da imagem
-                        gfx.DrawString(title, fontTitle, XBrushes.Black, new XPoint(positionXTitle, posY));
-
-                        posY += 40;
-
-                        // Cabeçalho da tabela - incluir os nomes das colunas dinamicamente
-                        foreach (DataGridViewColumn column in dataGridView1.Columns)
-                        {
-                            gfx.DrawString(column.HeaderText, fontHeader, XBrushes.Black, new XPoint(posX, posY));
-                            posX += 100;
-                        }
-
-                        posY += 20; // Nova linha
+                        // Título
+                        gfx.DrawString("Exportação de Dados", fontTitle, XBrushes.Black, new XPoint(posX, posY + 20));
                         posX = 20; // Resetar posição X
+                        posY += 80; // Ajustar posição Y
 
-                        // Adicionar linhas de dados
+                        // Cabeçalho da tabela
+                        gfx.DrawString("Nome do Produto", fontHeader, XBrushes.Black, new XPoint(posX, posY));
+                        gfx.DrawString("Quantidade", fontHeader, XBrushes.Black, new XPoint(posX + 150, posY));
+                        gfx.DrawString("Preço Custo", fontHeader, XBrushes.Black, new XPoint(posX + 250, posY));
+                        gfx.DrawString("Preço Venda", fontHeader, XBrushes.Black, new XPoint(posX + 350, posY));
+                        gfx.DrawString("Imposto", fontHeader, XBrushes.Black, new XPoint(posX + 450, posY));
+
+                        posY += 20;
+
+                        // Linhas de dados
+                        decimal totalQuantidade = 0;
+                        decimal totalPrecoCusto = 0;
+                        decimal totalPrecoVenda = 0;
+
                         foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
                             if (!row.IsNewRow)
                             {
-                                foreach (DataGridViewCell cell in row.Cells)
+                                string nomeProduto = row.Cells["nome_produto"].Value?.ToString() ?? "N/A";
+
+                                // Tentar converter a quantidade
+                                int quantidade = 0;
+                                if (!int.TryParse(row.Cells["quantidade"].Value?.ToString(), out quantidade))
                                 {
-                                    string cellValue = cell.Value?.ToString() ?? "N/A"; // Garantir que valores nulos sejam tratados
-                                    gfx.DrawString(cellValue, fontContent, XBrushes.Black, new XPoint(posX, posY));
-                                    posX += 100;
+                                    quantidade = 0;  // Caso não consiga converter, assume 0
                                 }
 
-                                posY += 20; // Nova linha
-                                posX = 20; // Resetar posição X
+                                // Tentar converter o preço de custo
+                                decimal precoCusto = 0;
+                                if (!decimal.TryParse(row.Cells["preco_custo"].Value?.ToString(), out precoCusto))
+                                {
+                                    precoCusto = 0;  // Caso não consiga converter, assume 0
+                                }
 
-                                // Verificar se a página está cheia
+                                // Tentar converter o preço de venda
+                                decimal precoVenda = 0;
+                                if (!decimal.TryParse(row.Cells["preco_venda"].Value?.ToString(), out precoVenda))
+                                {
+                                    precoVenda = 0;  // Caso não consiga converter, assume 0
+                                }
+
+                                // Tentar converter o imposto
+                                decimal imposto = 0;
+                                if (!decimal.TryParse(row.Cells["imposto"].Value?.ToString(), out imposto))
+                                {
+                                    imposto = 0;  // Caso não consiga converter, assume 0
+                                }
+
+                                // Soma dos totais
+                                totalQuantidade += quantidade;
+                                totalPrecoCusto += precoCusto;
+                                totalPrecoVenda += precoVenda;
+
+                                // Desenho dos dados
+                                gfx.DrawString(nomeProduto, fontContent, XBrushes.Black, new XPoint(posX, posY));
+                                gfx.DrawString(quantidade.ToString(), fontContent, XBrushes.Black, new XPoint(posX + 150, posY));
+                                gfx.DrawString(precoCusto.ToString("¥0.00"), fontContent, XBrushes.Black, new XPoint(posX + 250, posY));  // Sem milhar
+                                gfx.DrawString(precoVenda.ToString("¥0.00"), fontContent, XBrushes.Black, new XPoint(posX + 350, posY));  // Sem milhar
+                                gfx.DrawString(imposto.ToString("F2"), fontContent, XBrushes.Black, new XPoint(posX + 450, posY));
+
+                                posY += 20;
+
+                                // Verificar se precisa de nova página
                                 if (posY > page.Height - 50)
                                 {
-                                    // Adicionar nova página
                                     page = pdf.AddPage();
                                     gfx = XGraphics.FromPdfPage(page);
                                     posY = 30; // Resetar posição Y
@@ -274,9 +297,20 @@ namespace PJT_CasaBrasil
                             }
                         }
 
-                        // Salvar o PDF
-                        pdf.Save(saveFileDialog.FileName);
+                        // Linha de separação
+                        gfx.DrawLine(XPens.Black, posX, posY, posX + 500, posY);
+                        posY += 10;
 
+                        // Totais (ajustado para menor espaçamento)
+                        gfx.DrawString("Totais:", fontTotal, XBrushes.Black, new XPoint(posX, posY));
+                        gfx.DrawString("Quantidade: " + totalQuantidade.ToString("F0"), fontTotal, XBrushes.Black, new XPoint(posX + 100, posY));
+                        gfx.DrawString("Preço Custo: " + totalPrecoCusto.ToString("¥0.00"), fontTotal, XBrushes.Black, new XPoint(posX + 250, posY));  // Sem milhar
+                        gfx.DrawString("Preço Venda: " + totalPrecoVenda.ToString("¥0.00"), fontTotal, XBrushes.Black, new XPoint(posX + 400, posY));  // Sem milhar
+
+                        posY += 10; // Menor espaço abaixo da linha de totais
+
+                        // Salvar PDF
+                        pdf.Save(saveFileDialog.FileName);
                         MessageBox.Show("PDF salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
