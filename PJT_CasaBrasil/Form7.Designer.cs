@@ -91,7 +91,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(468, 78);
             this.button3.TabIndex = 12;
-            this.button3.Text = "Fechar venda";
+            this.button3.Text = "Encerramento do Caixa";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // label1

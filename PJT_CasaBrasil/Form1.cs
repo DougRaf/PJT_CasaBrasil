@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace PJT_CasaBrasil
 {
@@ -12,7 +13,79 @@ namespace PJT_CasaBrasil
         public Form1()
         {
             InitializeComponent();
+            // Verifica se o valor no banco é "1" antes de iniciar o sistema
+            VerificarBancoDeDados();
+
             InitializeProgressBar();
+        }
+
+        // Função para verificar o banco de dados antes de iniciar o sistema
+        private void VerificarBancoDeDados()
+        {
+            string connString = "Server=68.178.145.20;Database=casabrasil;Uid=dgssistemasJP;Pwd=Douglas@2025;";
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connString))
+                {
+                    conn.Open();
+
+                    // Definir a consulta SQL
+                    string query = "SELECT ativo FROM casabrasil LIMIT 1";
+
+                    // Executar o comando SQL
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                    // Obter o valor do banco de dados
+                    object result = cmd.ExecuteScalar(); // ExecuteScalar retorna o valor da primeira célula da primeira linha
+
+                    // Verificar se o resultado é nulo e exibir o valor
+                    if (result != null)
+                    {
+                        string valor = result.ToString();
+                        Console.WriteLine("Valor retornado: " + valor);
+
+                        // Verificar se o valor retornado é "1"
+                        if (valor == "1")
+                        {
+                            // Bloquear o fluxo (parar a execução do método)
+                            MessageBox.Show("Valor é 1. Parando execução e matando os processos...");
+
+                            // Matar os processos (cuidado com isso, pois pode finalizar processos importantes)
+                            var processes = Process.GetProcesses();
+                            foreach (var process in processes)
+                            {
+                                try
+                                {
+                                    // Exemplo de matar processos que têm o nome "notepad" (substitua conforme necessário)
+                                    if (process.ProcessName.ToLower() == "notepad")
+                                    {
+                                        process.Kill();
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Tratar exceções caso não seja possível matar algum processo
+                                    MessageBox.Show("Erro ao matar processo: " + ex.Message);
+                                }
+                            }
+
+                            // Fecha o formulário, interrompendo a execução
+                            this.Close();
+                            return; // Impede que o código continue
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nenhum valor encontrado.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao verificar banco de dados: " + ex.Message);
+                this.Close(); // Fecha o formulário em caso de erro na verificação
+            }
         }
 
         private void InitializeProgressBar()

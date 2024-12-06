@@ -58,74 +58,60 @@ namespace PJT_CasaBrasil
         {
             if (!string.IsNullOrWhiteSpace(txtCodigoDeBarras.Text))
             {
-                // Chama o método para buscar os dados
+                // Buscar produto no banco de dados
                 BuscarProduto(txtCodigoDeBarras.Text);
 
-                // Se for a primeira inserção ou após o cancelamento, reiniciar o contador
-                if (contadorItens == 0)
+                // Se os campos necessários estiverem preenchidos, proceder com o cálculo
+                if (!string.IsNullOrWhiteSpace(txtPrecoVenda.Text) && !string.IsNullOrWhiteSpace(txtImposto.Text))
                 {
-                    dataTable.Clear(); // Limpa os itens anteriores
-                }
-
-                // Adiciona os dados dos TextBoxes ao DataTable se todos os campos estiverem preenchidos
-                if (!string.IsNullOrWhiteSpace(txtNumeracao.Text) &&
-                    !string.IsNullOrWhiteSpace(txtCodigoDeBarras.Text) &&
-                    !string.IsNullOrWhiteSpace(txtNomeProduto.Text) &&
-                    !string.IsNullOrWhiteSpace(txtCategoria.Text) &&
-                    !string.IsNullOrWhiteSpace(txtPrecoVenda.Text) &&
-                    !string.IsNullOrWhiteSpace(txtImposto.Text))
-                {
-                    // Adiciona a nova linha ao DataTable
-                    dataTable.Rows.Add(
-                        txtNumeracao.Text,
-                        txtCodigoDeBarras.Text,
-                        txtNomeProduto.Text,
-                        txtCategoria.Text,
-                        txtPrecoVenda.Text,
-                        txtImposto.Text
-                    );
-
-                    // Incrementa o contador de itens
-                    contadorItens++;
-
-                    // Atualiza o contador de itens na interface
-                    UpdateItemCount();
-
-                    // Atualiza o total de vendas
-                    AtualizarTotalVenda();
-
-                    // Limpa os campos de texto para o próximo item
-                    ClearTextBoxes();
-
-                    // Caminho do arquivo de texto onde os dados serão salvos
-                    string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
-
-                    try
+                    // Converter valores para decimal
+                    if (decimal.TryParse(txtPrecoVenda.Text.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda) &&
+                        decimal.TryParse(txtImposto.Text.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal imposto))
                     {
-                        // Verifica se o diretório existe, caso contrário, cria o diretório
-                        string directoryPath = Path.GetDirectoryName(filePath);
-                        if (!Directory.Exists(directoryPath))
+                        // Calcular o preço com imposto
+                        decimal precoComImposto = precoVenda + (precoVenda * (imposto / 100));
+
+                        // Adicionar ao DataTable
+                        dataTable.Rows.Add(
+                            txtNumeracao.Text,
+                            txtCodigoDeBarras.Text,
+                            txtNomeProduto.Text,
+                            txtCategoria.Text,
+                            precoComImposto.ToString("F2"), // Formata com 2 casas decimais
+                            Math.Floor(imposto).ToString() // Remove as casas decimais do imposto
+                        );
+
+                        // Incrementar contador de itens
+                        contadorItens++;
+                        UpdateItemCount();
+
+                        // Atualizar o total de vendas
+                        AtualizarTotalVenda();
+
+                        // Limpar campos para próxima entrada
+                        ClearTextBoxes();
+
+                        // Salvar no arquivo
+                        string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+                        try
                         {
-                            Directory.CreateDirectory(directoryPath);
+                            string content = GetDataTableContent(dataTable);
+                            SaveToFile(filePath, content);
                         }
-
-                        // Converte os dados do DataTable para um formato de texto
-                        string content = GetDataTableContent(dataTable);
-
-                        // Salva o conteúdo no arquivo
-                        SaveToFile(filePath, content);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Erro ao salvar os dados no arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    catch (IOException ioEx)
+                    else
                     {
-                        MessageBox.Show($"Erro ao salvar os dados no arquivo: {ioEx.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro inesperado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Erro ao converter valores de preço ou imposto.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
+
+
 
         private void BuscarProduto(string codigoDeBarras)
         {
@@ -254,7 +240,10 @@ namespace PJT_CasaBrasil
 
             // Apagar o conteúdo do arquivo de texto
             string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+            string file = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\total.txt";
+
             File.WriteAllText(filePath, string.Empty);
+            File.WriteAllText(file, string.Empty);
 
             // Fechar o formulário atual
             this.Close();
@@ -284,47 +273,34 @@ namespace PJT_CasaBrasil
 
       
 
-        private void AtualizarTotalVenda()
+       private void AtualizarTotalVenda()
+{
+    totalVenda = 0; // Inicializa o total da venda
+
+    foreach (DataRow row in dataTable.Rows)
+    {
+        string precoTexto = row["Valor"].ToString().Trim(); // Pega o valor da coluna "Valor" e remove espaços em branco
+
+        // Remover qualquer caractere não numérico, como vírgulas, se necessário
+        precoTexto = precoTexto.Replace(",", "."); // Substitui vírgula por ponto
+
+        // Tente converter para decimal
+        if (decimal.TryParse(precoTexto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
         {
-            totalVenda = 0;  // Inicializa o total da venda
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                string precoTexto = row["Valor"].ToString().Trim();  // Pega o valor da coluna "Valor" e remove espaços em branco
-
-                // Remover qualquer caractere não numérico, como vírgulas, se necessário
-                precoTexto = precoTexto.Replace(",", ".");  // Substitui vírgula por ponto
-
-                // Tente converter para decimal
-                if (decimal.TryParse(precoTexto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
-                {
-                    // Adiciona o valor convertido ao totalVenda
-                    totalVenda += precoVenda;
-                }
-                else
-                {
-                    // Caso não seja possível converter o valor, exibe mensagem de erro
-                    MessageBox.Show("Erro ao converter valor para decimal: " + precoTexto, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
-            // Verifica se o valor totalVenda é inteiro
-            if (totalVenda == Math.Floor(totalVenda))
-            {
-                // Se for inteiro, não mostra casas decimais
-                textBox9.Text = totalVenda.ToString("0");
-            }
-            else
-            {
-                // Se não for inteiro, exibe com duas casas decimais
-                textBox9.Text = totalVenda.ToString("F2");
-            }
-            // Salva na classe estática
-
-          
-
+            // Adiciona o valor convertido ao totalVenda
+            totalVenda += precoVenda;
         }
+        else
+        {
+            // Caso não seja possível converter o valor, exibe mensagem de erro
+            MessageBox.Show("Erro ao converter valor para decimal: " + precoTexto, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+    }
+
+    // Atualiza o texto exibido no textBox9
+    textBox9.Text = totalVenda.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("pt-BR"));
+}
 
 
         private void textBox9_TextChanged(object sender, EventArgs e)
@@ -332,7 +308,43 @@ namespace PJT_CasaBrasil
             // Chama o método para atualizar o total de vendas
             AtualizarTotalVenda();
 
-            
+
+            // Salva o conteúdo do textBox9 em um arquivo txt
+            SalvarTextoEmArquivo();
+
+
+        }
+
+        // Método para salvar o texto do textBox9 em um arquivo txt
+        private void SalvarTextoEmArquivo()
+        {
+            try
+            {
+                // O caminho onde o arquivo será salvo. Pode ser ajustado conforme necessário.
+                string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\total.txt";
+
+                // Verifica se o diretório existe, caso contrário, cria o diretório
+                string diretorio = Path.GetDirectoryName(caminhoArquivo);
+                if (!Directory.Exists(diretorio))
+                {
+                    Directory.CreateDirectory(diretorio);
+                }
+
+                // Usando StreamWriter para salvar o texto no arquivo
+                using (StreamWriter sw = new StreamWriter(caminhoArquivo))
+                {
+                    // Escreve o conteúdo do TextBox no arquivo
+                    sw.Write(textBox9.Text);
+                }
+
+                // Mensagem de sucesso (opcional)
+                // MessageBox.Show("Arquivo salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Exibe mensagem de erro caso algo dê errado
+                MessageBox.Show("Erro ao salvar o arquivo: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
