@@ -561,12 +561,16 @@
   <ItemGroup>
     <Content Include="casabrasil.ico" />
     <Content Include="Img\casabrasil.png" />
+    <Content Include="Img\logo.png" />
+    <Content Include="Img\logoo.png" />
+    <Content Include="Img\logooo.png" />
     <Content Include="Resources\arquivo.txt" />
     <Content Include="Resources\beep.mp3" />
     <Content Include="Resources\Btn.mp3" />
     <Content Include="Resources\btn.wav" />
     <Content Include="Resources\casabrasil.ico" />
     <Content Include="Resources\hover.mp3" />
+    <Content Include="Resources\vendas.txt" />
     <None Include="Resources\logo-244-200.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,15 @@
+Nota Fiscal de Compra!
+2024-12-08 22:33
+------------------------
+Itens Inclusos
+------------------------
+1- pre... - ¥380   (Imposto 8%: ¥30)
+2- pre... - ¥380   (Imposto 8%: ¥30)
+------------------------
+Imposto 8%: ¥61
+Imposto 10%: ¥0
+------------------------
+Imposto Total: ¥61
+Total: ¥821
+------------------------
+Obrigado pela Preferência

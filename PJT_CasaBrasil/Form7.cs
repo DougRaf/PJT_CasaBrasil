@@ -1,9 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PJT_CasaBrasil
@@ -27,6 +31,9 @@ namespace PJT_CasaBrasil
 
             itemCount = 0; // Inicializa o contador
             UpdateItemCount();
+            txtNumeracao.Clear();
+            txtCodigoDeBarras.Focus();
+            txtNumeracao.ReadOnly = true;
         }
 
         private void InitializeDataTable()
@@ -49,10 +56,515 @@ namespace PJT_CasaBrasil
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Cria uma instância de Form2
-            Form12 form2 = new Form12();
-            // form2.DataToDisplay = dataTable.Copy();
+            // Iniciar a impressão de forma assíncrona 
+            PrintAsync();
+
+            // Quando for inserir os dados no banco
+            InsertDataIntoDatabase();
         }
+
+        private async void PrintAsync()
+        {
+            await Task.Run(() => ImprimirNotaFiscal());
+        }
+
+        private async void PrintAsyncCredito()
+        {
+            await Task.Run(() => ImprimirNotaFiscalCredito());
+        }
+
+        private async void PrintAsyncPrazo()
+        {
+            await Task.Run(() => ImprimirNotaFiscalCredito());
+        }
+
+        private void ImprimirNotaFiscalPrazo()
+        {
+            try
+            {
+                // Define a impressora e o método de impressão
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(prazo);
+                pd.PrinterSettings.PrinterName = "XP-58";  // Defina a impressora desejada
+
+                // Imprime sem abrir a caixa de diálogo
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar imprimir: " + ex.Message);
+            }
+        }
+
+
+        private void ImprimirNotaFiscal()
+        {
+            try
+            {
+                // Define a impressora e o método de impressão
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(PrintPage);
+                pd.PrinterSettings.PrinterName = "XP-58";  // Defina a impressora desejada
+
+                // Imprime sem abrir a caixa de diálogo
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar imprimir: " + ex.Message);
+            }
+        }
+
+        private void ImprimirNotaFiscalCredito()
+        {
+            try
+            {
+                // Define a impressora e o método de impressão
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += new PrintPageEventHandler(credito);
+                pd.PrinterSettings.PrinterName = "XP-58";  // Defina a impressora desejada
+
+                // Imprime sem abrir a caixa de diálogo
+                pd.Print();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao tentar imprimir: " + ex.Message);
+            }
+        }
+
+        private void PrintPage(object sender, PrintPageEventArgs e)
+        {
+            if (dataTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Fontes
+            Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
+            Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
+            Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
+
+            // Cor preta personalizada
+            Brush corPretaDensa = new SolidBrush(Color.Black);
+
+            // Margens e largura útil
+            float margem = 5;
+            float larguraUtil = e.PageBounds.Width - 2 * margem;
+
+            // Posição inicial
+            float posY = margem;
+
+            // Função para reforçar texto
+            void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
+            {
+                g.DrawString(texto, fonte, cor, pos);
+            }
+
+            // Desenha a imagem
+            Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
+            Image imagemEscurecida = DarkenImage(imagemOriginal);
+
+            int tamanhoImagem = 80;
+            float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
+            e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
+
+            posY += tamanhoImagem + 5;
+
+            // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
+            string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
+            float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
+            DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
+
+            posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
+
+            // Desenha o cabeçalho
+            string textoNotaFiscal = "Nota Fiscal de Compra!";
+            float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
+            float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
+            DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
+
+            posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
+
+            // Inicializando variáveis para somar os impostos
+            decimal imposto8Porcento = 0;
+            decimal imposto10Porcento = 0;
+            decimal totalSemImposto = 0;
+
+            // Adiciona os itens
+            string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string valor = item["Valor"] as string ?? "0";
+                string taxa = item["Taxa"] as string ?? "0";
+
+                if (nomeProduto.Length > 3)
+                {
+                    nomeProduto = nomeProduto.Substring(0, 3) + "...";
+                }
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                if (taxaDecimal == 8)
+                {
+                    imposto8Porcento += impostoProduto;
+                }
+                else if (taxaDecimal == 10)
+                {
+                    imposto10Porcento += impostoProduto;
+                }
+
+                textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
+                totalSemImposto += valorSemTaxa;
+            }
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
+            textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
+
+            decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
+            textoItens += $"Total: ¥{totalComImposto:N0}\n";
+            textoItens += "------------------------\n";
+            textoItens += "Obrigado pela Preferência\n";
+
+            DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
+            posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
+
+            posY += 18;
+
+            float linhaY = posY;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
+
+            posY = linhaY + 2;
+
+            // Footer
+            string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
+            string linkFooter = "www.dgssistemas.net";
+
+            float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
+            float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
+
+            float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
+            float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
+
+            DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
+            posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
+
+            DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
+            posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
+
+            float linhaFooterY = posY + 2;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
+
+            // Salvar no arquivo
+            string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+            StringBuilder conteudoArquivo = new StringBuilder();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string codigoProduto = item["Código"].ToString();
+                string formaPagamento = "Dinheiro";
+                string taxa = item["Taxa"] as string ?? "0";
+                string valor = item["Valor"] as string ?? "0";
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                conteudoArquivo.AppendLine(
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
+                );
+            }
+
+            try
+            {
+                File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        private void InsertDataIntoDatabase()
+        {
+            string connectionString = "Server=localhost;Database=casabrasil;Uid=root;Pwd=root;"; // String de conexão com o banco de dados
+            string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+            string caminhoArquivoLimpar = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt"; // Caminho do arquivo a ser limpo
+
+            try
+            {
+                // Verifica se o arquivo de vendas existe
+                if (!File.Exists(caminhoArquivo))
+                {
+                    MessageBox.Show("O arquivo vendas.txt não foi encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Lê todas as linhas do arquivo de vendas
+                string[] linhas = File.ReadAllLines(caminhoArquivo);
+
+                // Verifica se o arquivo de vendas está vazio
+                if (linhas.Length == 0)
+                {
+                    MessageBox.Show("O arquivo vendas.txt está vazio. Não há dados para inserir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    foreach (string linha in linhas)
+                    {
+                        // Ignora linhas vazias
+                        if (string.IsNullOrWhiteSpace(linha))
+                            continue;
+
+                        // Divide os valores da linha pelo delimitador ';'
+                        string[] valores = linha.Split(';');
+                        if (valores.Length != 8)
+                        {
+                            MessageBox.Show($"Formato inválido na linha: {linha}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+                        }
+
+                        // Atribui os valores às variáveis com os novos nomes
+                        string nomeProduto = valores[0]; // nomeProduto
+                        string codigoBarras = valores[1]; // codigoBarras
+                        string pagamento = valores[2]; // pagamento
+                        decimal impostoPorcentagem = decimal.Parse(valores[3]); // impostoPorcentagem
+                        decimal impostoValor = decimal.Parse(valores[4]); // impostoValor
+                        decimal totalSemImposto = decimal.Parse(valores[5]); // totalSemImposto
+                        decimal totalComImposto = decimal.Parse(valores[6]); // totalComImposto
+                        DateTime dataHoraOperacao = DateTime.Parse(valores[7]); // dataHoraOperacao
+
+                        // Query SQL para inserção
+                        string query = @"INSERT INTO vendas (nomeProduto, codigoBarras, pagamento, impostoPorcentagem, impostoValor, totalSemImposto, totalComImposto, dataHoraOperacao)
+                                 VALUES (@nomeProduto, @codigoBarras, @pagamento, @impostoPorcentagem, @impostoValor, @totalSemImposto, @totalComImposto, @dataHoraOperacao);";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            // Adiciona os parâmetros
+                            cmd.Parameters.AddWithValue("@nomeProduto", nomeProduto);
+                            cmd.Parameters.AddWithValue("@codigoBarras", codigoBarras);
+                            cmd.Parameters.AddWithValue("@pagamento", pagamento);
+                            cmd.Parameters.AddWithValue("@impostoPorcentagem", impostoPorcentagem);
+                            cmd.Parameters.AddWithValue("@impostoValor", impostoValor);
+                            cmd.Parameters.AddWithValue("@totalSemImposto", totalSemImposto);
+                            cmd.Parameters.AddWithValue("@totalComImposto", totalComImposto);
+                            cmd.Parameters.AddWithValue("@dataHoraOperacao", dataHoraOperacao);
+
+                            // Executa o comando
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    // Limpa o conteúdo do arquivo vendas.txt após a inserção dos dados
+                    File.WriteAllText(caminhoArquivo, string.Empty);
+
+                    // Limpa o conteúdo do arquivo arquivo.txt
+                    File.WriteAllText(caminhoArquivoLimpar, string.Empty);
+
+                    // Exibe a mensagem de sucesso
+                    ShowMessageOnSecondMonitor("Compra e pagamento feito com sucesso !!!");
+
+                    // Limpa os dados do formulário 
+                    LimparFormulario();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao inserir os dados: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ShowMessageOnSecondMonitor(string message)
+        {
+            // Verifica se há mais de um monitor conectado
+            if (Screen.AllScreens.Length > 1)
+            {
+                // Obtém o segundo monitor
+                var secondMonitor = Screen.AllScreens[1];
+
+                // Cria um formulário temporário para mostrar a mensagem no segundo monitor
+                Form messageForm = new Form
+                {
+                    StartPosition = FormStartPosition.Manual,
+                    Size = new System.Drawing.Size(400, 200),
+                    Text = "Mensagem de Sucesso",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    ControlBox = false,
+                    ShowInTaskbar = false, // Não aparece na barra de tarefas
+                    Location = secondMonitor.Bounds.Location
+                };
+
+                // Centraliza o formulário na tela do segundo monitor
+                messageForm.Location = new System.Drawing.Point(
+                    secondMonitor.Bounds.Left + (secondMonitor.Bounds.Width - messageForm.Width) / 2,
+                    secondMonitor.Bounds.Top + (secondMonitor.Bounds.Height - messageForm.Height) / 2
+                );
+
+                // Cria um label para exibir a mensagem
+                Label label = new Label
+                {
+                    Text = message,
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new System.Drawing.Font("Arial", 14, System.Drawing.FontStyle.Bold),
+                    Padding = new Padding(20)
+                };
+
+                // Adiciona o label ao formulário
+                messageForm.Controls.Add(label);
+
+                // Cria o botão "OK"
+                Button okButton = new Button
+                {
+                    Text = "OK",
+                    DialogResult = DialogResult.OK,
+                    Size = new System.Drawing.Size(75, 30)
+                };
+
+                // Calcula a posição para centralizar o botão
+                okButton.Location = new System.Drawing.Point(
+                    (messageForm.Width - okButton.Width) / 2,
+                    messageForm.Height - okButton.Height - 20
+                );
+
+                // Adiciona o botão "OK" ao formulário
+                messageForm.Controls.Add(okButton);
+                messageForm.AcceptButton = okButton;
+
+                // Cria o temporizador para fechar o formulário após 5 segundos
+                Timer timer = new Timer
+                {
+                    Interval = 5000 // 5000ms = 5 segundos
+                };
+
+                timer.Tick += (sender, e) =>
+                {
+                    messageForm.Close();  // Fecha o formulário
+                    timer.Stop(); // Para o temporizador
+                };
+
+                timer.Start(); // Inicia o temporizador
+
+                // Exibe o formulário
+                messageForm.ShowDialog();
+            }
+            else
+            {
+                // Caso não haja segundo monitor, exibe a mensagem na tela principal
+                MessageBox.Show(message, "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+
+
+        private void LimparFormulario()
+        {
+
+            // Restaurar a quantidade dos produtos no banco de dados
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string codigoBarras = row["Código"].ToString();
+                    int quantidadeVendida = 1;
+
+                    string updateQuery = "UPDATE produto SET quantidade = quantidade + @quantidadeVendida WHERE codigo_barras = @codigo";
+                    using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn))
+                    {
+                        updateCmd.Parameters.AddWithValue("@quantidadeVendida", quantidadeVendida);
+                        updateCmd.Parameters.AddWithValue("@codigo", codigoBarras);
+
+                        updateCmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            // Limpar o DataTable
+            dataTable.Clear();
+            contadorItens = 0;
+            UpdateItemCount();
+            txtNumeracao.Clear();
+
+            // Apagar o conteúdo do arquivo de texto
+            string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+            string file = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\total.txt";
+
+            File.WriteAllText(filePath, string.Empty);
+            File.WriteAllText(file, string.Empty);
+
+            // Fechar o formulário atual
+            this.Close();
+
+            // Criar uma nova instância do Form7 e reabrir
+            Form7 novoFormulario = new Form7();
+            novoFormulario.Show();
+        
+
+            // Mensagem informando que a venda foi cancelada MessageBox.Show("Venda cancelada com sucesso!", "Cancelamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+       
+
+
+        private Image DarkenImage(Image originalImage)
+        {
+            // Cria uma nova imagem com o mesmo tamanho da original
+            Bitmap darkenedImage = new Bitmap(originalImage.Width, originalImage.Height);
+
+            // Cria um objeto Graphics para aplicar o filtro de escurecimento
+            using (Graphics g = Graphics.FromImage(darkenedImage))
+            {
+                // Define um filtro para escurecer a imagem
+                ColorMatrix matrix = new ColorMatrix(new float[][]
+                {
+            new float[] {0.05f, 0, 0, 0, 0}, // Red (bem escuro)
+            new float[] {0, 0.05f, 0, 0, 0}, // Green (bem escuro)
+            new float[] {0, 0, 0.05f, 0, 0}, // Blue (bem escuro)
+            new float[] {0, 0, 0, 1, 0},     // Alpha (não muda)
+            new float[] {0, 0, 0, 0, 1}      // Branco (não muda)
+                });
+
+                // Cria o objeto ImageAttributes para aplicar a matriz de cor
+                ImageAttributes attributes = new ImageAttributes();
+                attributes.SetColorMatrix(matrix);
+
+                // Desenha a imagem original, mas com o filtro de escurecimento
+                g.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height),
+                                0, 0, originalImage.Width, originalImage.Height,
+                                GraphicsUnit.Pixel, attributes);
+            }
+
+            return darkenedImage;
+        }
+
+
 
         private void TxtCodigoDeBarras_TextChanged(object sender, EventArgs e)
         {
@@ -158,6 +670,7 @@ namespace PJT_CasaBrasil
                                 else
                                 {
                                     MessageBox.Show("Quantidade insuficiente.");
+                                    return;
                                 }
                             }
                             else
@@ -182,6 +695,7 @@ namespace PJT_CasaBrasil
             txtCategoria.Clear();
             txtPrecoVenda.Clear();
             txtImposto.Clear();
+            txtCodigoDeBarras.Focus();
         }
 
         private void UpdateItemCount()
@@ -265,15 +779,76 @@ namespace PJT_CasaBrasil
 
         private void button5_Click(object sender, EventArgs e)
         {
-            // Aqui você pode adicionar o código para outras ações que o botão 5 deve executar.
+            // Habilita o campo para entrada de numeração
+            txtNumeracao.ReadOnly = false;
 
-            Totalcase.Total = textBox9.Text;
-            MessageBox.Show("Erro ao converter valor para decimal: " + Totalcase.Total, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Exibe uma mensagem para o usuário inserir o número do item
+            MessageBox.Show("Digite o número do item que deseja remover no campo apropriado e pressione 'OK'.", "Remover Item", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Verifica se o campo txtNumeracao foi preenchido
+            if (!int.TryParse(txtNumeracao.Text, out int numeroItem) || numeroItem <= 0 || numeroItem > dataTable.Rows.Count)
+            {
+                MessageBox.Show("Número inválido. Por favor, insira um número de item válido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Confirma a remoção do item
+            DialogResult confirmacao = MessageBox.Show($"Deseja realmente remover o item número {numeroItem}?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacao == DialogResult.Yes)
+            {
+                // Obtém o índice do item a ser removido
+                int rowIndex = numeroItem - 1;
+
+                // Obtém o código do produto para restaurar a quantidade no banco
+                string codigoBarras = dataTable.Rows[rowIndex]["Código"].ToString();
+
+                // Remove a linha do DataTable
+                dataTable.Rows.RemoveAt(rowIndex);
+
+                // Atualiza o contador de itens
+                contadorItens--;
+                UpdateItemCount();
+
+                // Atualiza o total da venda
+                AtualizarTotalVenda();
+
+                // Limpa o campo de entrada e desabilita novamente
+                txtNumeracao.Clear();
+                txtNumeracao.ReadOnly = true;
+
+                // Restaura a quantidade do produto no banco de dados
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "UPDATE produto SET quantidade = quantidade + 1 WHERE codigo_barras = @codigo";
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@codigo", codigoBarras);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao atualizar o banco de dados: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                // Mensagem de sucesso
+                MessageBox.Show("Item removido com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtCodigoDeBarras.Focus();
+            }
+            else
+            {
+                // Cancela a remoção e desabilita o campo novamente
+                txtNumeracao.Clear();
+                txtNumeracao.ReadOnly = true;
+            }
         }
 
-      
-
-       private void AtualizarTotalVenda()
+        private void AtualizarTotalVenda()
 {
     totalVenda = 0; // Inicializa o total da venda
 
@@ -346,5 +921,368 @@ namespace PJT_CasaBrasil
                 MessageBox.Show("Erro ao salvar o arquivo: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void credito(object sender, PrintPageEventArgs e)
+        {
+            if (dataTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Fontes
+            Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
+            Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
+            Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
+
+            // Cor preta personalizada
+            Brush corPretaDensa = new SolidBrush(Color.Black);
+
+            // Margens e largura útil
+            float margem = 5;
+            float larguraUtil = e.PageBounds.Width - 2 * margem;
+
+            // Posição inicial
+            float posY = margem;
+
+            // Função para reforçar texto
+            void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
+            {
+                g.DrawString(texto, fonte, cor, pos);
+            }
+
+            // Desenha a imagem
+            Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
+            Image imagemEscurecida = DarkenImage(imagemOriginal);
+
+            int tamanhoImagem = 80;
+            float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
+            e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
+
+            posY += tamanhoImagem + 5;
+
+            // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
+            string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
+            float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
+            DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
+
+            posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
+
+            // Desenha o cabeçalho
+            string textoNotaFiscal = "Nota Fiscal de Compra!";
+            float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
+            float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
+            DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
+
+            posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
+
+            // Inicializando variáveis para somar os impostos
+            decimal imposto8Porcento = 0;
+            decimal imposto10Porcento = 0;
+            decimal totalSemImposto = 0;
+
+            // Adiciona os itens
+            string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string valor = item["Valor"] as string ?? "0";
+                string taxa = item["Taxa"] as string ?? "0";
+
+                if (nomeProduto.Length > 3)
+                {
+                    nomeProduto = nomeProduto.Substring(0, 3) + "...";
+                }
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                if (taxaDecimal == 8)
+                {
+                    imposto8Porcento += impostoProduto;
+                }
+                else if (taxaDecimal == 10)
+                {
+                    imposto10Porcento += impostoProduto;
+                }
+
+                textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
+                totalSemImposto += valorSemTaxa;
+            }
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
+            textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
+
+            decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
+            textoItens += $"Total: ¥{totalComImposto:N0}\n";
+            textoItens += "------------------------\n";
+            textoItens += "Obrigado pela Preferência\n";
+
+            DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
+            posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
+
+            posY += 18;
+
+            float linhaY = posY;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
+
+            posY = linhaY + 2;
+
+            // Footer
+            string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
+            string linkFooter = "www.dgssistemas.net";
+
+            float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
+            float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
+
+            float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
+            float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
+
+            DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
+            posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
+
+            DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
+            posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
+
+            float linhaFooterY = posY + 2;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
+
+            // Salvar no arquivo
+            string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+            StringBuilder conteudoArquivo = new StringBuilder();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string codigoProduto = item["Código"].ToString();
+                string formaPagamento = "Credito";
+                string taxa = item["Taxa"] as string ?? "0";
+                string valor = item["Valor"] as string ?? "0";
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                conteudoArquivo.AppendLine(
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
+                );
+            }
+
+            try
+            {
+                File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void prazo(object sender, PrintPageEventArgs e)
+        {
+            if (dataTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Fontes
+            Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
+            Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
+            Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
+
+            // Cor preta personalizada
+            Brush corPretaDensa = new SolidBrush(Color.Black);
+
+            // Margens e largura útil
+            float margem = 5;
+            float larguraUtil = e.PageBounds.Width - 2 * margem;
+
+            // Posição inicial
+            float posY = margem;
+
+            // Função para reforçar texto
+            void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
+            {
+                g.DrawString(texto, fonte, cor, pos);
+            }
+
+            // Desenha a imagem
+            Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
+            Image imagemEscurecida = DarkenImage(imagemOriginal);
+
+            int tamanhoImagem = 80;
+            float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
+            e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
+
+            posY += tamanhoImagem + 5;
+
+            // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
+            string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
+            float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
+            DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
+
+            posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
+
+            // Desenha o cabeçalho
+            string textoNotaFiscal = "Nota Fiscal de Compra!";
+            float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
+            float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
+            DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
+
+            posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
+
+            // Inicializando variáveis para somar os impostos
+            decimal imposto8Porcento = 0;
+            decimal imposto10Porcento = 0;
+            decimal totalSemImposto = 0;
+
+            // Adiciona os itens
+            string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string valor = item["Valor"] as string ?? "0";
+                string taxa = item["Taxa"] as string ?? "0";
+
+                if (nomeProduto.Length > 3)
+                {
+                    nomeProduto = nomeProduto.Substring(0, 3) + "...";
+                }
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                if (taxaDecimal == 8)
+                {
+                    imposto8Porcento += impostoProduto;
+                }
+                else if (taxaDecimal == 10)
+                {
+                    imposto10Porcento += impostoProduto;
+                }
+
+                textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
+                totalSemImposto += valorSemTaxa;
+            }
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
+            textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
+
+            decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
+            textoItens += $"Total: ¥{totalComImposto:N0}\n";
+            textoItens += "------------------------\n";
+            textoItens += "Obrigado pela Preferência\n";
+
+            DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
+            posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
+
+            posY += 18;
+
+            float linhaY = posY;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
+
+            posY = linhaY + 2;
+
+            // Footer
+            string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
+            string linkFooter = "www.dgssistemas.net";
+
+            float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
+            float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
+
+            float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
+            float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
+
+            DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
+            posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
+
+            DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
+            posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
+
+            float linhaFooterY = posY + 2;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
+
+            // Salvar no arquivo
+            string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+            StringBuilder conteudoArquivo = new StringBuilder();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string codigoProduto = item["Código"].ToString();
+                string formaPagamento = "Prazo";
+                string taxa = item["Taxa"] as string ?? "0";
+                string valor = item["Valor"] as string ?? "0";
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                conteudoArquivo.AppendLine(
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
+                );
+            }
+
+            try
+            {
+                File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+            // Iniciar a impressão de forma assíncrona 
+            PrintAsyncCredito();
+
+            // Quando for inserir os dados no banco
+            InsertDataIntoDatabase();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Iniciar a impressão de forma assíncrona 
+            PrintAsyncPrazo();
+
+            // Quando for inserir os dados no banco
+            InsertDataIntoDatabase();
+
+        }
+
+ 
     }
 }

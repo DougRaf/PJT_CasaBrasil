@@ -61,6 +61,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -70,20 +71,21 @@
             // 
             this.button1.Location = new System.Drawing.Point(25, 430);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(238, 48);
+            this.button1.Size = new System.Drawing.Size(154, 48);
             this.button1.TabIndex = 10;
-            this.button1.Text = "Pagamento a vista";
+            this.button1.Text = "Dinheiro";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(269, 430);
+            this.button2.Location = new System.Drawing.Point(341, 430);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(224, 48);
+            this.button2.Size = new System.Drawing.Size(152, 48);
             this.button2.TabIndex = 11;
-            this.button2.Text = "Pagamento a prazo";
+            this.button2.Text = "Prazo";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -140,6 +142,7 @@
             // 
             this.txtNumeracao.Location = new System.Drawing.Point(25, 234);
             this.txtNumeracao.Name = "txtNumeracao";
+            this.txtNumeracao.ReadOnly = true;
             this.txtNumeracao.Size = new System.Drawing.Size(47, 20);
             this.txtNumeracao.TabIndex = 4;
             // 
@@ -147,6 +150,7 @@
             // 
             this.txtPrecoVenda.Location = new System.Drawing.Point(48, 309);
             this.txtPrecoVenda.Name = "txtPrecoVenda";
+            this.txtPrecoVenda.ReadOnly = true;
             this.txtPrecoVenda.Size = new System.Drawing.Size(134, 20);
             this.txtPrecoVenda.TabIndex = 7;
             // 
@@ -154,6 +158,7 @@
             // 
             this.txtCategoria.Location = new System.Drawing.Point(78, 234);
             this.txtCategoria.Name = "txtCategoria";
+            this.txtCategoria.ReadOnly = true;
             this.txtCategoria.Size = new System.Drawing.Size(415, 20);
             this.txtCategoria.TabIndex = 5;
             // 
@@ -181,6 +186,7 @@
             // 
             this.txtImposto.Location = new System.Drawing.Point(205, 309);
             this.txtImposto.Name = "txtImposto";
+            this.txtImposto.ReadOnly = true;
             this.txtImposto.Size = new System.Drawing.Size(100, 20);
             this.txtImposto.TabIndex = 8;
             // 
@@ -190,11 +196,13 @@
             this.txtCodigoDeBarras.Name = "txtCodigoDeBarras";
             this.txtCodigoDeBarras.Size = new System.Drawing.Size(173, 20);
             this.txtCodigoDeBarras.TabIndex = 1;
+            
             // 
             // txtNomeProduto
             // 
             this.txtNomeProduto.Location = new System.Drawing.Point(204, 183);
             this.txtNomeProduto.Name = "txtNomeProduto";
+            this.txtNomeProduto.ReadOnly = true;
             this.txtNomeProduto.Size = new System.Drawing.Size(289, 20);
             this.txtNomeProduto.TabIndex = 2;
             // 
@@ -232,6 +240,7 @@
             // 
             this.textBox9.Location = new System.Drawing.Point(347, 308);
             this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(124, 20);
             this.textBox9.TabIndex = 9;
             this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -377,7 +386,7 @@
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(304, 312);
+            this.label12.Location = new System.Drawing.Point(308, 311);
             this.label12.Name = "label12";
             this.label12.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.label12.Size = new System.Drawing.Size(20, 19);
@@ -408,6 +417,16 @@
             this.label16.TabIndex = 54;
             this.label16.Text = "円";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(185, 430);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(150, 48);
+            this.button7.TabIndex = 55;
+            this.button7.Text = "Crédito";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -416,6 +435,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(1073, 674);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -494,5 +514,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button button7;
     }
 }

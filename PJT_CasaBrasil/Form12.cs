@@ -28,6 +28,14 @@ namespace PJT_CasaBrasil
             ConfigurarWatcher();
         }
 
+            private void DispararMessageBox()
+    {
+        // Criar uma nova instância do Form7
+        Form7 form7 = new Form7();
+        
+
+    }
+
         private void Form12_Load(object sender, EventArgs e)
         {
             txtCodigoDeBarras.Text = DataToDisplay;
@@ -37,6 +45,7 @@ namespace PJT_CasaBrasil
 
             // Caminho do arquivo de texto
             string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+
 
             try
             {
