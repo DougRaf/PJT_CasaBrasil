@@ -62,6 +62,9 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtCobrar = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -196,7 +199,7 @@
             this.txtCodigoDeBarras.Name = "txtCodigoDeBarras";
             this.txtCodigoDeBarras.Size = new System.Drawing.Size(173, 20);
             this.txtCodigoDeBarras.TabIndex = 1;
-            
+            this.txtCodigoDeBarras.TextChanged += new System.EventHandler(this.txtCodigoDeBarras_TextChanged_1);
             // 
             // txtNomeProduto
             // 
@@ -238,7 +241,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(347, 308);
+            this.textBox9.Location = new System.Drawing.Point(347, 293);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(124, 20);
@@ -250,7 +253,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(336, 276);
+            this.label9.Location = new System.Drawing.Point(333, 261);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(157, 29);
             this.label9.TabIndex = 26;
@@ -275,6 +278,7 @@
             this.button4.TabIndex = 13;
             this.button4.Text = "Menu Principal";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label11
             // 
@@ -398,7 +402,7 @@
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(330, 310);
+            this.label13.Location = new System.Drawing.Point(330, 295);
             this.label13.Name = "label13";
             this.label13.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.label13.Size = new System.Drawing.Size(15, 19);
@@ -410,7 +414,7 @@
             this.label16.AutoSize = true;
             this.label16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(473, 311);
+            this.label16.Location = new System.Drawing.Point(473, 296);
             this.label16.Name = "label16";
             this.label16.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.label16.Size = new System.Drawing.Size(20, 16);
@@ -427,6 +431,38 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(473, 322);
+            this.label17.Name = "label17";
+            this.label17.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.label17.Size = new System.Drawing.Size(20, 16);
+            this.label17.TabIndex = 58;
+            this.label17.Text = "円";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(330, 321);
+            this.label18.Name = "label18";
+            this.label18.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.label18.Size = new System.Drawing.Size(15, 19);
+            this.label18.TabIndex = 57;
+            this.label18.Text = "¥";
+            // 
+            // txtCobrar
+            // 
+            this.txtCobrar.Location = new System.Drawing.Point(347, 319);
+            this.txtCobrar.Name = "txtCobrar";
+            this.txtCobrar.Size = new System.Drawing.Size(124, 20);
+            this.txtCobrar.TabIndex = 56;
+            this.txtCobrar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,6 +471,9 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(1073, 674);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.txtCobrar);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label13);
@@ -515,5 +554,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtCobrar;
     }
 }

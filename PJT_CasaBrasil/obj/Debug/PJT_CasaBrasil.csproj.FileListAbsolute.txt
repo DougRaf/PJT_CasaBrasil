@@ -321,3 +321,4 @@ C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\System.Text.Encoding.CodePages.xml
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\de\PdfSharp.resources.dll
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\de\PdfSharp.Charting.resources.dll
 C:\PJT_CasaBrasil\PJT_CasaBrasil\bin\Debug\de\PdfSharpCore.resources.dll
+C:\PJT_CasaBrasil\PJT_CasaBrasil\obj\Debug\PJT_CasaBrasil.Form13.resources
