@@ -19,7 +19,7 @@ namespace PJT_CasaBrasil
         private DataTable dataTable;
         private int itemCount;
         private decimal totalVenda = 0; // Para armazenar o total das vendas
-                                      
+
         private decimal valorPago = 0;
 
 
@@ -86,7 +86,7 @@ namespace PJT_CasaBrasil
             {
                 // Define a impressora e o método de impressão
                 PrintDocument pd = new PrintDocument();
-                pd.PrintPage += new PrintPageEventHandler(prazo);
+                pd.PrintPage += new PrintPageEventHandler(Prazo);
                 pd.PrinterSettings.PrinterName = "XP-58";  // Defina a impressora desejada
 
                 // Imprime sem abrir a caixa de diálogo
@@ -135,7 +135,7 @@ namespace PJT_CasaBrasil
             }
         }
 
-    
+
 
         // Método para capturar o valor pago antes de imprimir
         private void CapturarValorPago()
@@ -148,184 +148,195 @@ namespace PJT_CasaBrasil
                 valorPago = 0;
             }
         }
+
         private void PrintPage(object sender, PrintPageEventArgs e)
-{
-    if (dataTable.Rows.Count == 0)
-    {
-        MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        return;
-    }
-
-    // Fontes
-    Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
-    Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
-    Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
-
-    // Cor preta personalizada
-    Brush corPretaDensa = new SolidBrush(Color.Black);
-
-    // Margens e largura útil
-    float margem = 5;
-    float larguraUtil = e.PageBounds.Width - 2 * margem;
-
-    // Posição inicial
-    float posY = margem;
-
-    // Função para reforçar texto
-    void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
-    {
-        g.DrawString(texto, fonte, cor, pos);
-    }
-
-    // Desenha a imagem
-    Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
-    Image imagemEscurecida = DarkenImage(imagemOriginal);
-
-    int tamanhoImagem = 80;
-    float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
-    e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
-
-    posY += tamanhoImagem + 5;
-
-    // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
-    string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-    float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
-    float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
-    DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
-
-    posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
-
-    // Desenha o cabeçalho
-    string textoNotaFiscal = "Nota Fiscal de Compra!";
-    float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
-    float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
-    DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
-
-    posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
-
-    // Inicializando variáveis para somar os impostos
-    decimal imposto8Porcento = 0;
-    decimal imposto10Porcento = 0;
-    decimal totalSemImposto = 0;
-
-    // Adiciona os itens
-    string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
-    for (int i = 0; i < dataTable.Rows.Count; i++)
-    {
-        var item = dataTable.Rows[i];
-        string nomeProduto = item["Produto"].ToString();
-        string valor = item["Valor"] as string ?? "0";
-        string taxa = item["Taxa"] as string ?? "0";
-
-        if (nomeProduto.Length > 3)
         {
-            nomeProduto = nomeProduto.Substring(0, 3) + "...";
+            if (dataTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Fontes
+            Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
+            Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
+            Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
+
+            // Cor preta personalizada
+            Brush corPretaDensa = new SolidBrush(Color.Black);
+
+            // Margens e largura útil
+            float margem = 5;
+            float larguraUtil = e.PageBounds.Width - 2 * margem;
+
+            // Posição inicial
+            float posY = margem;
+
+            // Função para reforçar texto
+            void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
+            {
+                g.DrawString(texto, fonte, cor, pos);
+            }
+
+            // Desenha a imagem
+            Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
+            Image imagemEscurecida = DarkenImage(imagemOriginal);
+
+            int tamanhoImagem = 80;
+            float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
+            e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
+
+            posY += tamanhoImagem + 5;
+
+            // Endereço e telefone
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n 土居原町255-3 Tel-0704445-0613";
+            float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
+            float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
+            DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));
+
+            posY += e.Graphics.MeasureString(enderecoTelefone, fonteItens).Height + 5;
+
+            // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
+            string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
+            float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
+            DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
+
+            posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
+
+            // Desenha o cabeçalho
+            string textoNotaFiscal = "Nota Fiscal de Compra!";
+            float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
+            float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
+            DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
+
+            posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
+
+            // Inicializando variáveis para somar os impostos
+            decimal imposto8Porcento = 0;
+            decimal imposto10Porcento = 0;
+            decimal totalSemImposto = 0;
+
+            // Adiciona os itens
+            string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string valor = item["Valor"] as string ?? "0";
+                string taxa = item["Taxa"] as string ?? "0";
+
+                if (nomeProduto.Length > 3)
+                {
+                    nomeProduto = nomeProduto.Substring(0, 3) + "...";
+                }
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                if (taxaDecimal == 8)
+                {
+                    imposto8Porcento += impostoProduto;
+                }
+                else if (taxaDecimal == 10)
+                {
+                    imposto10Porcento += impostoProduto;
+                }
+
+                textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
+                totalSemImposto += valorSemTaxa;
+            }
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
+            textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
+
+            decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
+
+            textoItens += "------------------------\n";
+            textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
+            textoItens += $"Total: ¥{totalComImposto:N0}\n";
+
+            // Pega o valor pago do TextBox txtCobrar.Text
+            decimal valorPago = 0;
+            if (decimal.TryParse(txtCobrar.Text, out valorPago))
+            {
+                // Calcula o troco
+                decimal troco = valorPago - totalComImposto;
+                textoItens += "------------------------\n";
+                textoItens += $"Valor Pago: ¥{valorPago:N0}\n";
+                textoItens += $"Troco: ¥{(troco >= 0 ? troco : 0):N0}\n"; // Evita valores negativos
+            }
+            else
+            {
+                // Caso o valor no TextBox não seja um número válido
+                textoItens += "Valor Pago: INVÁLIDO\n";
+                textoItens += "Troco: INVÁLIDO\n";
+            }
+
+            textoItens += "------------------------\n";
+            textoItens += "Obrigado pela Preferência\n";
+
+            DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
+            posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
+
+            posY += 18;
+
+            float linhaY = posY;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
+
+            posY = linhaY + 2;
+
+            // Footer
+            string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
+            string linkFooter = "www.dgssistemas.net";
+
+            float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
+            float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
+
+            float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
+            float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
+
+            DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
+            posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
+
+            DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
+            posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
+
+            float linhaFooterY = posY + 2;
+            e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
+
+            // Salvar no arquivo
+            string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+            StringBuilder conteudoArquivo = new StringBuilder();
+
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var item = dataTable.Rows[i];
+                string nomeProduto = item["Produto"].ToString();
+                string codigoProduto = item["Código"].ToString();
+                string formaPagamento = "Dinheiro";
+                string taxa = item["Taxa"] as string ?? "0";
+                string valor = item["Valor"] as string ?? "0";
+
+                decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                conteudoArquivo.AppendLine(
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)valorDecimal};{taxaDecimal};{valorSemTaxa};{impostoProduto};{dataHora}");
+            }
+
+            // Salvar no arquivo txt
+            File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            txtCodigoDeBarras.Focus();
         }
 
-        decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
-        decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
-        decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
-        decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
-
-        if (taxaDecimal == 8)
-        {
-            imposto8Porcento += impostoProduto;
-        }
-        else if (taxaDecimal == 10)
-        {
-            imposto10Porcento += impostoProduto;
-        }
-
-        textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
-        totalSemImposto += valorSemTaxa;
-    }
-
-    textoItens += "------------------------\n";
-    textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
-    textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
-
-    decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
-
-    textoItens += "------------------------\n";
-    textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
-    textoItens += $"Total: ¥{totalComImposto:N0}\n";
-
-    // Pega o valor pago do TextBox txtCobrar.Text
-    decimal valorPago = 0;
-    if (decimal.TryParse(txtCobrar.Text, out valorPago))
-    {
-        // Calcula o troco
-        decimal troco = valorPago - totalComImposto;
-        textoItens += "------------------------\n";
-        textoItens += $"Valor Pago: ¥{valorPago:N0}\n";
-        textoItens += $"Troco: ¥{(troco >= 0 ? troco : 0):N0}\n"; // Evita valores negativos
-    }
-    else
-    {
-        // Caso o valor no TextBox não seja um número válido
-        textoItens += "Valor Pago: INVÁLIDO\n";
-        textoItens += "Troco: INVÁLIDO\n";
-    }
-
-    textoItens += "------------------------\n";
-    textoItens += "Obrigado pela Preferência\n";
-
-    DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
-    posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
-
-    posY += 18;
-
-    float linhaY = posY;
-    e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
-
-    posY = linhaY + 2;
-
-    // Footer
-    string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
-    string linkFooter = "www.dgssistemas.net";
-
-    float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
-    float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
-
-    float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
-    float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
-
-    DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
-    posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
-
-    DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
-    posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
-
-    float linhaFooterY = posY + 2;
-    e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
-
-    // Salvar no arquivo
-    string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
-    StringBuilder conteudoArquivo = new StringBuilder();
-
-    for (int i = 0; i < dataTable.Rows.Count; i++)
-    {
-        var item = dataTable.Rows[i];
-        string nomeProduto = item["Produto"].ToString();
-        string codigoProduto = item["Código"].ToString();
-        string formaPagamento = "Dinheiro";
-        string taxa = item["Taxa"] as string ?? "0";
-        string valor = item["Valor"] as string ?? "0";
-
-        decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
-        decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
-        decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
-        decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
-
-        string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-        conteudoArquivo.AppendLine(
-            $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)valorDecimal};{taxaDecimal};{valorSemTaxa};{impostoProduto};{dataHora}");
-    }
-
-    // Salvar no arquivo txt
-    File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
-}
 
 
         private void InsertDataIntoDatabase()
@@ -413,6 +424,7 @@ namespace PJT_CasaBrasil
 
                     // Limpa os dados do formulário 
                     LimparFormulario();
+                    txtCodigoDeBarras.Focus();
                 }
             }
             catch (Exception ex)
@@ -549,13 +561,14 @@ namespace PJT_CasaBrasil
             // Criar uma nova instância do Form7 e reabrir
             Form7 novoFormulario = new Form7();
             novoFormulario.Show();
-        
+            txtCodigoDeBarras.Focus();
+
 
             // Mensagem informando que a venda foi cancelada MessageBox.Show("Venda cancelada com sucesso!", "Cancelamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
-       
+
 
 
         private Image DarkenImage(Image originalImage)
@@ -630,12 +643,12 @@ namespace PJT_CasaBrasil
 
                         // Salvar no arquivo
                         string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
-                        // Coloca o foco no campo 'txtCodigoDeBarras'
-                        txtCodigoDeBarras.Focus();
+                        // Coloca o foco no campo 'txtCodigoDeBarras'       
                         try
                         {
                             string content = GetDataTableContent(dataTable);
                             SaveToFile(filePath, content);
+                            txtCodigoDeBarras.Focus();
                         }
                         catch (Exception ex)
                         {
@@ -702,7 +715,7 @@ namespace PJT_CasaBrasil
                             }
                             else
                             {
-                               // MessageBox.Show("Código de barras não encontrado.");
+                                // MessageBox.Show("Código de barras não encontrado.");
                             }
                         }
                     }
@@ -876,33 +889,33 @@ namespace PJT_CasaBrasil
         }
 
         private void AtualizarTotalVenda()
-{
-    totalVenda = 0; // Inicializa o total da venda
-
-    foreach (DataRow row in dataTable.Rows)
-    {
-        string precoTexto = row["Valor"].ToString().Trim(); // Pega o valor da coluna "Valor" e remove espaços em branco
-
-        // Remover qualquer caractere não numérico, como vírgulas, se necessário
-        precoTexto = precoTexto.Replace(",", "."); // Substitui vírgula por ponto
-
-        // Tente converter para decimal
-        if (decimal.TryParse(precoTexto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
         {
-            // Adiciona o valor convertido ao totalVenda
-            totalVenda += precoVenda;
-        }
-        else
-        {
-            // Caso não seja possível converter o valor, exibe mensagem de erro
-            MessageBox.Show("Erro ao converter valor para decimal: " + precoTexto, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-    }
+            totalVenda = 0; // Inicializa o total da venda
 
-    // Atualiza o texto exibido no textBox9
-    textBox9.Text = totalVenda.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("pt-BR"));
-}
+            foreach (DataRow row in dataTable.Rows)
+            {
+                string precoTexto = row["Valor"].ToString().Trim(); // Pega o valor da coluna "Valor" e remove espaços em branco
+
+                // Remover qualquer caractere não numérico, como vírgulas, se necessário
+                precoTexto = precoTexto.Replace(",", "."); // Substitui vírgula por ponto
+
+                // Tente converter para decimal
+                if (decimal.TryParse(precoTexto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda))
+                {
+                    // Adiciona o valor convertido ao totalVenda
+                    totalVenda += precoVenda;
+                }
+                else
+                {
+                    // Caso não seja possível converter o valor, exibe mensagem de erro
+                    MessageBox.Show("Erro ao converter valor para decimal: " + precoTexto, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // Atualiza o texto exibido no textBox9
+            textBox9.Text = totalVenda.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("pt-BR"));
+        }
 
 
         private void textBox9_TextChanged(object sender, EventArgs e)
@@ -988,6 +1001,14 @@ namespace PJT_CasaBrasil
 
             posY += tamanhoImagem + 5;
 
+            // Endereço e telefone
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n                土居原町255-3\n                 Tel-0704445-0613";
+            float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
+            float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
+            DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));
+
+            posY += e.Graphics.MeasureString(enderecoTelefone, fonteItens).Height + 5;
+
             // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
             string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
@@ -1050,6 +1071,24 @@ namespace PJT_CasaBrasil
             textoItens += "------------------------\n";
             textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
             textoItens += $"Total: ¥{totalComImposto:N0}\n";
+
+            // Pega o valor pago do TextBox txtCobrar.Text
+            decimal valorPago = 0;
+            if (decimal.TryParse(txtCobrar.Text, out valorPago))
+            {
+                // Calcula o troco
+                decimal troco = valorPago - totalComImposto;
+                textoItens += "------------------------\n";
+                textoItens += $"Valor Pago: ¥{valorPago:N0}\n";
+                textoItens += $"Troco: ¥{(troco >= 0 ? troco : 0):N0}\n"; // Evita valores negativos
+            }
+            else
+            {
+                // Caso o valor no TextBox não seja um número válido
+                textoItens += "Valor Pago: INVÁLIDO\n";
+                textoItens += "Troco: INVÁLIDO\n";
+            }
+
             textoItens += "------------------------\n";
             textoItens += "Obrigado pela Preferência\n";
 
@@ -1091,7 +1130,7 @@ namespace PJT_CasaBrasil
                 var item = dataTable.Rows[i];
                 string nomeProduto = item["Produto"].ToString();
                 string codigoProduto = item["Código"].ToString();
-                string formaPagamento = "Credito";
+                string formaPagamento = "Dinheiro";
                 string taxa = item["Taxa"] as string ?? "0";
                 string valor = item["Valor"] as string ?? "0";
 
@@ -1103,22 +1142,185 @@ namespace PJT_CasaBrasil
                 string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 conteudoArquivo.AppendLine(
-                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
-                );
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)valorDecimal};{taxaDecimal};{valorSemTaxa};{impostoProduto};{dataHora}");
             }
 
-            try
-            {
-                File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Salvar no arquivo txt
+            File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            txtCodigoDeBarras.Focus();
         }
 
 
-        private void prazo(object sender, PrintPageEventArgs e)
+        /*  private void credito(object sender, PrintPageEventArgs e)
+          {
+              if (dataTable.Rows.Count == 0)
+              {
+                  MessageBox.Show("Não há dados para serem impressos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                  return;
+              }
+
+              // Fontes
+              Font fonteCabecalho = new Font("Arial", 8, FontStyle.Bold);
+              Font fonteItens = new Font("Arial", 6, FontStyle.Bold);
+              Font fonteFooter = new Font("Arial", 6, FontStyle.Bold);
+
+              // Cor preta personalizada
+              Brush corPretaDensa = new SolidBrush(Color.Black);
+
+              // Margens e largura útil
+              float margem = 5;
+              float larguraUtil = e.PageBounds.Width - 2 * margem;
+
+              // Posição inicial
+              float posY = margem;
+
+              // Função para reforçar texto
+              void DrawTextReinforced(Graphics g, string texto, Font fonte, Brush cor, PointF pos)
+              {
+                  g.DrawString(texto, fonte, cor, pos);
+              }
+
+              // Desenha a imagem
+              Image imagemOriginal = Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\logo.png");
+              Image imagemEscurecida = DarkenImage(imagemOriginal);
+
+              int tamanhoImagem = 80;
+              float posXImagem = (e.PageBounds.Width - tamanhoImagem) / 2;
+              e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
+
+              posY += tamanhoImagem + 5;
+
+              // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
+              string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+              float larguraDataHora = e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Width;
+              float posXDataHora = (e.PageBounds.Width - larguraDataHora) / 2;
+              DrawTextReinforced(e.Graphics, dataHoraOperacao, fonteCabecalho, corPretaDensa, new PointF(posXDataHora, posY));
+
+              posY += e.Graphics.MeasureString(dataHoraOperacao, fonteCabecalho).Height + 5;
+
+              // Desenha o cabeçalho
+              string textoNotaFiscal = "Nota Fiscal de Compra!";
+              float larguraTextoNotaFiscal = e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Width;
+              float posXTextoNotaFiscal = (e.PageBounds.Width - larguraTextoNotaFiscal) / 2;
+              DrawTextReinforced(e.Graphics, textoNotaFiscal, fonteCabecalho, corPretaDensa, new PointF(posXTextoNotaFiscal, posY));
+
+              posY += e.Graphics.MeasureString(textoNotaFiscal, fonteCabecalho).Height + 2;
+
+              // Inicializando variáveis para somar os impostos
+              decimal imposto8Porcento = 0;
+              decimal imposto10Porcento = 0;
+              decimal totalSemImposto = 0;
+
+              // Adiciona os itens
+              string textoItens = "------------------------\nItens Inclusos\n------------------------\n";
+              for (int i = 0; i < dataTable.Rows.Count; i++)
+              {
+                  var item = dataTable.Rows[i];
+                  string nomeProduto = item["Produto"].ToString();
+                  string valor = item["Valor"] as string ?? "0";
+                  string taxa = item["Taxa"] as string ?? "0";
+
+                  if (nomeProduto.Length > 3)
+                  {
+                      nomeProduto = nomeProduto.Substring(0, 3) + "...";
+                  }
+
+                  decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                  decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                  decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                  decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                  if (taxaDecimal == 8)
+                  {
+                      imposto8Porcento += impostoProduto;
+                  }
+                  else if (taxaDecimal == 10)
+                  {
+                      imposto10Porcento += impostoProduto;
+                  }
+
+                  textoItens += $"{i + 1}- {nomeProduto} - ¥{valorSemTaxa}   (Imposto {taxaDecimal}%: ¥{impostoProduto})\n";
+                  totalSemImposto += valorSemTaxa;
+              }
+
+              textoItens += "------------------------\n";
+              textoItens += $"Imposto 8%: ¥{imposto8Porcento:N0}\n";
+              textoItens += $"Imposto 10%: ¥{imposto10Porcento:N0}\n";
+
+              decimal totalComImposto = totalSemImposto + imposto8Porcento + imposto10Porcento;
+
+              textoItens += "------------------------\n";
+              textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
+              textoItens += $"Total: ¥{totalComImposto:N0}\n";
+              textoItens += "------------------------\n";
+              textoItens += "Obrigado pela Preferência\n";
+
+              DrawTextReinforced(e.Graphics, textoItens, fonteItens, corPretaDensa, new PointF(margem, posY));
+              posY += e.Graphics.MeasureString(textoItens, fonteItens).Height + 2;
+
+              posY += 18;
+
+              float linhaY = posY;
+              e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaY, e.PageBounds.Width - margem, linhaY);
+
+              posY = linhaY + 2;
+
+              // Footer
+              string textoFooter = "Desenvolvido por DGSSISTEMAS® 2024";
+              string linkFooter = "www.dgssistemas.net";
+
+              float larguraTextoFooter = e.Graphics.MeasureString(textoFooter, fonteFooter).Width;
+              float larguraLinkFooter = e.Graphics.MeasureString(linkFooter, fonteFooter).Width;
+
+              float posXTextoFooter = (e.PageBounds.Width - larguraTextoFooter) / 2;
+              float posXLinkFooter = (e.PageBounds.Width - larguraLinkFooter) / 2;
+
+              DrawTextReinforced(e.Graphics, textoFooter, fonteFooter, corPretaDensa, new PointF(posXTextoFooter, posY));
+              posY += e.Graphics.MeasureString(textoFooter, fonteFooter).Height + 2;
+
+              DrawTextReinforced(e.Graphics, linkFooter, fonteFooter, corPretaDensa, new PointF(posXLinkFooter, posY));
+              posY += e.Graphics.MeasureString(linkFooter, fonteFooter).Height;
+
+              float linhaFooterY = posY + 2;
+              e.Graphics.DrawLine(new Pen(corPretaDensa), margem, linhaFooterY, e.PageBounds.Width - margem, linhaFooterY);
+
+              // Salvar no arquivo
+              string caminhoArquivo = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\vendas.txt";
+              StringBuilder conteudoArquivo = new StringBuilder();
+
+              for (int i = 0; i < dataTable.Rows.Count; i++)
+              {
+                  var item = dataTable.Rows[i];
+                  string nomeProduto = item["Produto"].ToString();
+                  string codigoProduto = item["Código"].ToString();
+                  string formaPagamento = "Credito";
+                  string taxa = item["Taxa"] as string ?? "0";
+                  string valor = item["Valor"] as string ?? "0";
+
+                  decimal valorDecimal = decimal.TryParse(valor, out var v) ? v : 0;
+                  decimal taxaDecimal = decimal.TryParse(taxa, out var t) ? t : 0;
+                  decimal valorSemTaxa = Math.Round(valorDecimal / (1 + (taxaDecimal / 100)), 0);
+                  decimal impostoProduto = Math.Round(valorSemTaxa * (taxaDecimal / 100), 0);
+
+                  string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                  conteudoArquivo.AppendLine(
+                      $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
+                  );
+              }
+
+              try
+              {
+                  File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              }
+          }*/
+
+
+        private void Prazo(object sender, PrintPageEventArgs e)
         {
             if (dataTable.Rows.Count == 0)
             {
@@ -1156,6 +1358,14 @@ namespace PJT_CasaBrasil
             e.Graphics.DrawImage(imagemEscurecida, new RectangleF(posXImagem, posY, tamanhoImagem, tamanhoImagem));
 
             posY += tamanhoImagem + 5;
+
+            // Endereço e telefone
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n                土居原町255-3\n                 Tel-0704445-0613";
+            float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
+            float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
+            DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));
+
+            posY += e.Graphics.MeasureString(enderecoTelefone, fonteItens).Height + 5;
 
             // Data e hora no formato japonês (AAAA-MM-DD HH:mm)
             string dataHoraOperacao = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
@@ -1219,6 +1429,24 @@ namespace PJT_CasaBrasil
             textoItens += "------------------------\n";
             textoItens += $"Imposto Total: ¥{(imposto8Porcento + imposto10Porcento):N0}\n";
             textoItens += $"Total: ¥{totalComImposto:N0}\n";
+
+            // Pega o valor pago do TextBox txtCobrar.Text
+            decimal valorPago = 0;
+            if (decimal.TryParse(txtCobrar.Text, out valorPago))
+            {
+                // Calcula o troco
+                decimal troco = valorPago - totalComImposto;
+                textoItens += "------------------------\n";
+                textoItens += $"Valor Pago: ¥{valorPago:N0}\n";
+                textoItens += $"Troco: ¥{(troco >= 0 ? troco : 0):N0}\n"; // Evita valores negativos
+            }
+            else
+            {
+                // Caso o valor no TextBox não seja um número válido
+                textoItens += "Valor Pago: INVÁLIDO\n";
+                textoItens += "Troco: INVÁLIDO\n";
+            }
+
             textoItens += "------------------------\n";
             textoItens += "Obrigado pela Preferência\n";
 
@@ -1272,18 +1500,12 @@ namespace PJT_CasaBrasil
                 string dataHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 conteudoArquivo.AppendLine(
-                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)taxaDecimal};{(int)impostoProduto};{(int)valorSemTaxa};{(int)valorDecimal};{dataHora}"
-                );
+                    $"{nomeProduto};{codigoProduto};{formaPagamento};{(int)valorDecimal};{taxaDecimal};{valorSemTaxa};{impostoProduto};{dataHora}");
             }
 
-            try
-            {
-                File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao salvar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Salvar no arquivo txt
+            File.WriteAllText(caminhoArquivo, conteudoArquivo.ToString());
+            txtCodigoDeBarras.Focus();
         }
 
 
@@ -1320,5 +1542,117 @@ namespace PJT_CasaBrasil
             Form9 form9 = new Form9();
             form9.Show();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            // Verifica se o RadioButton1 está marcado
+            if (!radioButton1.Checked)
+            {
+                MessageBox.Show("Por favor, marque a opção antes de prosseguir.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Verifica se os campos necessários estão preenchidos
+            if (string.IsNullOrWhiteSpace(txtPrecoVenda.Text) || string.IsNullOrWhiteSpace(txtImposto.Text))
+            {
+                MessageBox.Show("Preencha todos os campos obrigatórios antes de continuar.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Converter valores para decimal
+            if (decimal.TryParse(txtPrecoVenda.Text.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal precoVenda) &&
+                decimal.TryParse(txtImposto.Text.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal imposto))
+            {
+                // Calcular o preço com imposto
+                decimal precoComImposto = precoVenda + (precoVenda * (imposto / 100));
+
+                // Adicionar ao DataTable
+                dataTable.Rows.Add(
+                    txtNumeracao.Text,
+                    txtCodigoDeBarras.Text,
+                    txtNomeProduto.Text,
+                    txtCategoria.Text,
+                    precoComImposto.ToString("F2"), // Formata com 2 casas decimais
+                    Math.Floor(imposto).ToString() // Remove as casas decimais do imposto
+                );
+
+                // Incrementar contador de itens
+                contadorItens++;
+                UpdateItemCount();
+
+                // Atualizar o total de vendas
+                AtualizarTotalVenda();
+
+                // Limpar campos para próxima entrada
+                ClearTextBoxes();
+
+                // Salvar no arquivo
+                string filePath = @"C:\PJT_CasaBrasil\PJT_CasaBrasil\Resources\arquivo.txt";
+                txtCodigoDeBarras.Focus(); // Coloca o foco no campo 'txtCodigoDeBarras'
+                try
+                {
+                    string content = GetDataTableContent(dataTable);
+                    SaveToFile(filePath, content);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao salvar os dados no arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Erro ao converter valores de preço ou imposto. Verifique os dados informados.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Remover a seleção do RadioButton1 ao final do método
+            radioButton1.Checked = false;
+            txtCodigoDeBarras.Focus();
+        }
+
+
+
+
+
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            // Verifica se o RadioButton está marcado
+            if (radioButton1.Checked)
+            {
+                // Habilita os controles
+                txtPrecoVenda.Enabled = true;
+                txtImposto.Enabled = true;
+                txtNumeracao.Enabled = true;
+                txtNomeProduto.Enabled = true;
+                txtCategoria.Enabled = true;
+                button8.Enabled = true;
+
+                // Define os campos como somente leitura
+                txtPrecoVenda.ReadOnly = false;
+                txtImposto.ReadOnly = false;
+                txtNumeracao.ReadOnly = false;
+                txtNomeProduto.ReadOnly = false;
+                txtCategoria.ReadOnly = false;
+            }
+            else
+            {
+                // Desabilita os controles
+                txtPrecoVenda.Enabled = false;
+                txtImposto.Enabled = false;
+                txtNumeracao.Enabled = false;
+                txtNomeProduto.Enabled = false;
+                txtCategoria.Enabled = false;
+                button8.Enabled = false;
+
+                // Define os campos como somente leitura para evitar edição
+                txtPrecoVenda.ReadOnly = true;
+                txtImposto.ReadOnly = true;
+                txtNumeracao.ReadOnly = true;
+                txtNomeProduto.ReadOnly = true;
+                txtCategoria.ReadOnly = true;
+            }
+        }
+
+      
     }
 }
