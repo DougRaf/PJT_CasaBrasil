@@ -189,7 +189,7 @@ namespace PJT_CasaBrasil
             posY += tamanhoImagem + 5;
 
             // Endereço e telefone
-            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n 土居原町255-3 Tel-0704445-0613";
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n Tel-0704445-0613";
             float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
             float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
             DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));
@@ -1002,7 +1002,7 @@ namespace PJT_CasaBrasil
             posY += tamanhoImagem + 5;
 
             // Endereço e telefone
-            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n                土居原町255-3\n                 Tel-0704445-0613";
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n Tel-0704445-0613";
             float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
             float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
             DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));
@@ -1360,7 +1360,7 @@ namespace PJT_CasaBrasil
             posY += tamanhoImagem + 5;
 
             // Endereço e telefone
-            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n                土居原町255-3\n                 Tel-0704445-0613";
+            string enderecoTelefone = "〒923-0921 石川県小松市土居原町253-2\n  Tel-0704445-0613";
             float larguraEnderecoTelefone = e.Graphics.MeasureString(enderecoTelefone, fonteItens).Width;
             float posXEnderecoTelefone = (e.PageBounds.Width - larguraEnderecoTelefone) / 2;
             DrawTextReinforced(e.Graphics, enderecoTelefone, fonteItens, corPretaDensa, new PointF(posXEnderecoTelefone, posY));

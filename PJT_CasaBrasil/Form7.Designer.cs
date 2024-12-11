@@ -196,7 +196,6 @@
             this.txtImposto.ReadOnly = true;
             this.txtImposto.Size = new System.Drawing.Size(100, 20);
             this.txtImposto.TabIndex = 8;
-       
             // 
             // txtCodigoDeBarras
             // 
@@ -246,7 +245,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(331, 293);
+            this.textBox9.Location = new System.Drawing.Point(333, 293);
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             this.textBox9.Size = new System.Drawing.Size(124, 20);
@@ -463,7 +462,7 @@
             // txtCobrar
             // 
             this.txtCobrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCobrar.Location = new System.Drawing.Point(331, 319);
+            this.txtCobrar.Location = new System.Drawing.Point(333, 319);
             this.txtCobrar.Name = "txtCobrar";
             this.txtCobrar.Size = new System.Drawing.Size(124, 35);
             this.txtCobrar.TabIndex = 56;
