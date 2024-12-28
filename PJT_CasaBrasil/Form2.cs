@@ -2,6 +2,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -14,14 +16,16 @@ namespace PJT_CasaBrasil
         private string placeholderText1 = "Digite seu usuário..."; // Texto do placeholder
         private string placeholderText2 = "Digite sua senha..."; // Texto do placeholder
         private object panelContainer;
-        private string connectionString = "Server=localhost;Database=casabrasil;Uid=root;Pwd=root;";
+        private string connectionString = "Server=localhost; Database=casabrasil; Uid=root; Pwd=root;";
 
 
 
         public Form2()
         {
             InitializeComponent();
-           
+            textBox2.PasswordChar = '*';
+            // Configure o TextBox para esconder a senha utilizando o sistema
+            textBox2.UseSystemPasswordChar = true;
 
             // Configure o TextBox
             ConfigurePlaceholder(textBox1, placeholderText1);
@@ -161,6 +165,19 @@ namespace PJT_CasaBrasil
 
 
         }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Form10 form10 = new Form10();
+            form10.Show();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Form15 form15 = new Form15();
+            form15.Show();
+        }
+
     }
 }
 

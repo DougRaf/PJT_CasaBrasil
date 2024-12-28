@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,6 +25,46 @@ namespace PJT_CasaBrasil
         {
             try
             {
+                // Dados para o banco de dados
+                string nome = textBox1.Text; // Por exemplo, usando o nome do usuário
+                string data = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); // Data e hora atual
+                string troco = textBox2.Text; // Pega o valor do troco no TextBox2
+
+                // Verifica se o campo troco está vazio
+                if (string.IsNullOrEmpty(troco))
+                {
+                    // Exibe uma mensagem de erro e interrompe o fluxo
+                    MessageBox.Show("Por favor, insira o valor do troco.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // Interrompe o fluxo, não continua com o código abaixo
+                }
+
+                // Defina a string de conexão com seu banco de dados MySQL
+                string connectionString = "Server=localhost;Database=casabrasil;Uid=root;Pwd=root;";
+
+                // Crie a conexão com o banco de dados
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Comando SQL para inserir dados na tabela abre_caixa
+                    string query = "INSERT INTO abre_caixa (nome, data, troco) VALUES (@nome, @data, @troco)";
+
+                    // Crie o comando com parâmetros para evitar SQL Injection
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@nome", nome);
+                        cmd.Parameters.AddWithValue("@data", data);
+                        cmd.Parameters.AddWithValue("@troco", troco);
+
+                        // Execute o comando
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // Mostrar mensagem de sucesso
+                MessageBox.Show("Dados inseridos com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Abre o Form7 e esconde o Form3
                 Form7 form7 = new Form7();
                 form7.Show();
                 this.Hide();
@@ -56,8 +97,6 @@ namespace PJT_CasaBrasil
                 {
                     MessageBox.Show("Não há múltiplos monitores conectados.");
                 }
-
-                // Adicione controles ao mainForm conforme necessário                
             }
             catch (Exception ex)
             {
@@ -65,6 +104,8 @@ namespace PJT_CasaBrasil
                 MessageBox.Show($"Ocorreu um erro ao abrir o formulário principal: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
         private void Form3_Load(object sender, EventArgs e)
         {
@@ -74,11 +115,6 @@ namespace PJT_CasaBrasil
             maskedTextBox1.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
             maskedTextBox1.ReadOnly = true;
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
 
         }
 

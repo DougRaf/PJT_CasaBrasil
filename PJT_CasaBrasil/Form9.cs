@@ -21,7 +21,6 @@ namespace PJT_CasaBrasil
         private AudioFileReader audioFileReader;
         //   private PrintDocument printDocument;
 
-        private string printerName = "XP-58"; // Nome da impressora
 
         private NotifyIcon notifyIcon1;
         private int userId;
@@ -66,8 +65,8 @@ namespace PJT_CasaBrasil
 
             // Inicializa o menu de contexto se necessário
             var contextMenu = new ContextMenuStrip();//C:\\Users\\User\\Desktop\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\casabrasil.ico
-            var abrirMenuItem = new ToolStripMenuItem("Abrir", Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\casabrasil.ico")); // Caminho para o ícone
-            var sairMenuItem = new ToolStripMenuItem("Sair", Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\casabrasil.ico")); // Caminho para o ícone
+            var abrirMenuItem = new ToolStripMenuItem("Menu do Sistema", Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\sistema.ico")); // Caminho para o ícone
+            var sairMenuItem = new ToolStripMenuItem("Sair do Sistema", Image.FromFile("C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Resources\\sair.ico")); // Caminho para o ícone
             contextMenu.Items.Add(abrirMenuItem);
             contextMenu.Items.Add(sairMenuItem);
 
@@ -165,13 +164,13 @@ namespace PJT_CasaBrasil
 
         private void button5_Click(object sender, EventArgs e)
         {
-           Form5 form5 = new Form5();
-           form5.Show();
+
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-       
+            Form5 form5 = new Form5();
+            form5.Show();
         }
 
         private void button9_Click(object sender, EventArgs e)

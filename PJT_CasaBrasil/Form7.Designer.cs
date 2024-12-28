@@ -45,10 +45,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -76,9 +75,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(25, 430);
+            this.button1.Location = new System.Drawing.Point(25, 449);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(154, 48);
+            this.button1.Size = new System.Drawing.Size(154, 73);
             this.button1.TabIndex = 10;
             this.button1.Text = "Dinheiro";
             this.button1.UseVisualStyleBackColor = true;
@@ -86,9 +85,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(341, 430);
+            this.button2.Location = new System.Drawing.Point(341, 449);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(152, 48);
+            this.button2.Size = new System.Drawing.Size(152, 73);
             this.button2.TabIndex = 11;
             this.button2.Text = "Prazo";
             this.button2.UseVisualStyleBackColor = true;
@@ -96,12 +95,13 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(25, 484);
+            this.button3.Location = new System.Drawing.Point(25, 528);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(468, 78);
+            this.button3.Size = new System.Drawing.Size(468, 79);
             this.button3.TabIndex = 12;
             this.button3.Text = "Encerramento do Caixa";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -203,7 +203,8 @@
             this.txtCodigoDeBarras.Name = "txtCodigoDeBarras";
             this.txtCodigoDeBarras.Size = new System.Drawing.Size(173, 20);
             this.txtCodigoDeBarras.TabIndex = 1;
-            this.txtCodigoDeBarras.TextChanged += new System.EventHandler(this.txtCodigoDeBarras_TextChanged_1);
+            this.txtCodigoDeBarras.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCodigoBarras_KeyDown);
+            this.txtCodigoDeBarras.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtCodigoBarras_PreviewKeyDown);
             // 
             // txtNomeProduto
             // 
@@ -212,6 +213,7 @@
             this.txtNomeProduto.ReadOnly = true;
             this.txtNomeProduto.Size = new System.Drawing.Size(289, 20);
             this.txtNomeProduto.TabIndex = 2;
+            this.txtNomeProduto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNomeProduto_KeyDown);
             // 
             // label5
             // 
@@ -243,15 +245,15 @@
             this.label8.TabIndex = 24;
             this.label8.Text = "Taxa";
             // 
-            // textBox9
+            // txtTotal
             // 
-            this.textBox9.Location = new System.Drawing.Point(333, 293);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(124, 20);
-            this.textBox9.TabIndex = 9;
-            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
+            this.txtTotal.Location = new System.Drawing.Point(333, 293);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(124, 20);
+            this.txtTotal.TabIndex = 9;
+            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTotal.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             // 
             // label9
             // 
@@ -274,22 +276,12 @@
             this.label10.TabIndex = 27;
             this.label10.Text = "Lançamentos";
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(25, 568);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(468, 39);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Menu Principal";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label11.Location = new System.Drawing.Point(66, 377);
+            this.label11.Location = new System.Drawing.Point(66, 389);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(399, 29);
             this.label11.TabIndex = 29;
@@ -427,9 +419,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(185, 430);
+            this.button7.Location = new System.Drawing.Point(185, 449);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(150, 48);
+            this.button7.Size = new System.Drawing.Size(150, 73);
             this.button7.TabIndex = 55;
             this.button7.Text = "Crédito";
             this.button7.UseVisualStyleBackColor = true;
@@ -508,7 +500,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
-            this.ClientSize = new System.Drawing.Size(1073, 674);
+            this.ClientSize = new System.Drawing.Size(974, 645);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label18);
@@ -525,10 +517,9 @@
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
@@ -579,10 +570,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;

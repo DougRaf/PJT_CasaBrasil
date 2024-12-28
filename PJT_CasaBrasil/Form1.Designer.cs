@@ -35,6 +35,7 @@
             this.progressBar.Size = new System.Drawing.Size(237, 23);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 2;
+            this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
             // 
             // lblPercentage
             // 
@@ -55,7 +56,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
-           
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // label5
             // 

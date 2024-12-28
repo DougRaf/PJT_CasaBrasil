@@ -14,13 +14,13 @@ namespace PJT_CasaBrasil
         {
             InitializeComponent();
             // Verifica se o valor no banco é "1" antes de iniciar o sistema
-            VerificarBancoDeDados();
+         
 
             InitializeProgressBar();
         }
 
         // Função para verificar o banco de dados antes de iniciar o sistema
-        private void VerificarBancoDeDados()
+       private void VerificarBancoDeDados()
         {
             string connString = "Server=68.178.145.20;Database=casabrasil;Uid=dgssistemasJP;Pwd=Douglas@2025;";
 
@@ -49,7 +49,7 @@ namespace PJT_CasaBrasil
                         if (valor == "1")
                         {
                             // Bloquear o fluxo (parar a execução do método)
-                            MessageBox.Show("Valor é 1. Parando execução e matando os processos...");
+                              MessageBox.Show("Por Favor Verifique Sua Conecxão Com a Internet!!!", "Atenção!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);;
 
                             // Matar os processos (cuidado com isso, pois pode finalizar processos importantes)
                             var processes = Process.GetProcesses();
@@ -176,6 +176,16 @@ namespace PJT_CasaBrasil
             {
                 Console.WriteLine("Erro ao executar o processo: " + ex.Message);
             }
+        }
+
+        private void progressBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

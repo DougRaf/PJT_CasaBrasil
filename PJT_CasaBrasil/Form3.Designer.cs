@@ -154,7 +154,6 @@
             this.label6.Size = new System.Drawing.Size(24, 21);
             this.label6.TabIndex = 29;
             this.label6.Text = "円";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // Form3
             // 
