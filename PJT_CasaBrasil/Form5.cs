@@ -7,7 +7,9 @@ using System.Windows.Forms;
 using System.Data;
 using MySql.Data.MySqlClient;
 using PdfSharp.Pdf;
-using PdfSharp.Drawing; // Necessário para trabalhar com MySQL
+using PdfSharp.Drawing;
+using System.Linq; // Necessário para trabalhar com MySQL
+using System.Text;
 
 namespace PJT_CasaBrasil
 {
@@ -241,9 +243,277 @@ namespace PJT_CasaBrasil
             }
         }
 
+        /* private void button2_Click(object sender, EventArgs e)
+         {
+             SaveFileDialog saveFileDialog = new SaveFileDialog
+             {
+                 Filter = "CSV Files (*.csv)|*.csv",
+                 DefaultExt = ".csv",
+                 FileName = "Relatorio_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv"
+             };
+
+             if (saveFileDialog.ShowDialog() == DialogResult.OK)
+             {
+                 try
+                 {
+                     // Usa UTF-8 para suportar caracteres acentuados
+                     using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName, false, System.Text.Encoding.UTF8))
+                     {
+                         // Adiciona o título
+                         writer.WriteLine("Relatório de Vendas".PadRight(70));
+                         writer.WriteLine(new string('-', 80)); // Linha separadora
+                         writer.WriteLine($"Data do Relatório: {DateTime.Now:dd/MM/yyyy HH:mm:ss}");
+                         writer.WriteLine();
+
+                         // Defina os cabeçalhos com espaçamento fixo
+                         string[] headers = {
+                     "codigoBarras".PadRight(20),
+                     "pagamento".PadRight(15),
+                     "totalComImposto".PadRight(20),
+                     "impostoValor".PadRight(15),
+                     "totalSemImposto".PadRight(20),
+                     "impostoPorcentagem".PadRight(20),
+                     "dataHoraOperacao".PadRight(25)
+                 };
+
+                         // Escreve os cabeçalhos no CSV
+                         writer.WriteLine(string.Join("", headers));
+
+                         // Variáveis para cálculos
+                         int totalComImposto = 0, totalSemImposto = 0, totalImposto = 0;
+                         int total8Percent = 0, total10Percent = 0;
+                         int totalCredito = 0, totalDinheiro = 0, totalPrazo = 0;
+
+                         // Itera sobre as linhas do DataGridView
+                         foreach (DataGridViewRow row in dataGridView1.Rows)
+                         {
+                             if (row.IsNewRow) continue; // Ignora a última linha em branco do DataGridView
+
+                             // Ordena e formata os valores com espaçamento fixo
+                             string[] values = new string[]
+                             {
+                         (row.Cells["codigoBarras"]?.Value?.ToString() ?? string.Empty).PadRight(20),
+                         (row.Cells["pagamento"]?.Value?.ToString() ?? string.Empty).PadRight(15),
+                         (row.Cells["totalComImposto"]?.Value?.ToString() ?? string.Empty).PadRight(20),
+                         (row.Cells["impostoValor"]?.Value?.ToString() ?? string.Empty).PadRight(15),
+                         (row.Cells["totalSemImposto"]?.Value?.ToString() ?? string.Empty).PadRight(20),
+                         (row.Cells["impostoPorcentagem"]?.Value?.ToString() ?? string.Empty).PadRight(20),
+                         (row.Cells["dataHoraOperacao"]?.Value?.ToString() ?? string.Empty).PadRight(25)
+                             };
+
+                             // Escreve a linha no CSV
+                             writer.WriteLine(string.Join("", values));
+
+                             // Calcula os totais
+                             int valorComImposto = Convert.ToInt32(row.Cells["totalComImposto"]?.Value ?? 0);
+                             int valorSemImposto = Convert.ToInt32(row.Cells["totalSemImposto"]?.Value ?? 0);
+                             int impostoValor = Convert.ToInt32(row.Cells["impostoValor"]?.Value ?? 0);
+                             int impostoPorcentagem = Convert.ToInt32(row.Cells["impostoPorcentagem"]?.Value ?? 0);
+
+                             totalComImposto += valorComImposto;
+                             totalSemImposto += valorSemImposto;
+                             totalImposto += impostoValor;
+
+                             // Verifica os percentuais de imposto
+                             if (impostoValor == 8)
+                                 total8Percent += impostoValor;
+                             if (impostoValor == 10)
+                                 total10Percent += impostoValor;
+
+                             // Soma por tipo de pagamento
+                             string pagamento = row.Cells["pagamento"]?.Value?.ToString() ?? string.Empty;
+                             if (pagamento.Equals("Crédito", StringComparison.OrdinalIgnoreCase))
+                                 totalCredito += valorComImposto;
+                             if (pagamento.Equals("Dinheiro", StringComparison.OrdinalIgnoreCase))
+                                 totalDinheiro += valorComImposto;
+                             if (pagamento.Equals("Prazo", StringComparison.OrdinalIgnoreCase))
+                                 totalPrazo += valorComImposto;
+                         }
+
+                         // Calcula os percentuais de impostos
+                         double percentual8 = totalImposto > 0 ? (total8Percent * 100.0 / totalImposto) : 0;
+                         double percentual10 = totalImposto > 0 ? (total10Percent * 100.0 / totalImposto) : 0;
+
+                         // Adiciona uma linha em branco antes dos totais
+                         writer.WriteLine();
+                         writer.WriteLine(new string('-', 80)); // Linha separadora
+
+                         // Escreve os totais no final do arquivo
+                         writer.WriteLine("Totais:");
+                         writer.WriteLine($"Total Sem Imposto: ¥{totalSemImposto}");
+                         writer.WriteLine($"Total Com Imposto: ¥{totalComImposto}");
+                         writer.WriteLine($"Total Imposto Cobrado: ¥{totalImposto}");
+                         writer.WriteLine($"Total Imposto (8%): {percentual8:F0}%");
+                         writer.WriteLine($"Total Imposto (10%): {percentual10:F0}%");
+                         writer.WriteLine($"Total em Crédito: ¥{totalCredito}");
+                         writer.WriteLine($"Total em Dinheiro: ¥{totalDinheiro}");
+                         writer.WriteLine($"Total a Prazo: ¥{totalPrazo}");
+                     }
+
+                     MessageBox.Show("Dados salvos como CSV com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                 }
+                 catch (Exception ex)
+                 {
+                     MessageBox.Show("Erro ao salvar os dados em CSV: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 }
+             }
+        */
+
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv",
+                DefaultExt = ".csv",
+                FileName = "Relatorio_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv" // Nome do arquivo com data/hora
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Criando o arquivo CSV com codificação UTF-8 para suportar caracteres acentuados
+                    using (var writer = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
+                    {
+                        // Adicionando título e data
+                        writer.WriteLine("Relatório de Vendas");
+                        writer.WriteLine("Data: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                        writer.WriteLine(new string('-', 80)); // Linha separadora
+
+                        // Cabeçalhos
+                        writer.WriteLine(
+                            $"{AddSpacing("Código Barras")},{AddSpacing("Pagamento")},{AddSpacing("Total C/ Imp.")},{AddSpacing("Imp. Valor")},{AddSpacing("Total S/ Imp.")},{AddSpacing("Imp. %")},{AddSpacing("Data/Hora Operação")}"
+                        );
+
+                        int totalComImposto = 0, totalSemImposto = 0, totalImposto = 0;
+                        int total8Percent = 0, total10Percent = 0;
+                        int totalCredito = 0, totalDinheiro = 0, totalPrazo = 0;
+                        int totalPercentColumn = 0;
+
+                        // Dados
+                        foreach (DataGridViewRow dataRow in dataGridView1.Rows)
+                        {
+                            if (dataRow.IsNewRow) continue;
+
+                            try
+                            {
+                                string codigoBarras = dataRow.Cells["codigoBarras"]?.Value?.ToString() ?? string.Empty;
+                                string pagamento = dataRow.Cells["pagamento"]?.Value?.ToString() ?? string.Empty;
+
+                                // Validação e conversão dos valores
+                                int totalComImpostoValue = 0;
+                                if (!int.TryParse(dataRow.Cells["totalComImposto"]?.Value?.ToString(), out totalComImpostoValue))
+                                    totalComImpostoValue = 0;
+
+                                int impostoValor = 0;
+                                if (!int.TryParse(dataRow.Cells["impostoValor"]?.Value?.ToString(), out impostoValor))
+                                    impostoValor = 0;
+
+                                int totalSemImpostoValue = 0;
+                                if (!int.TryParse(dataRow.Cells["totalSemImposto"]?.Value?.ToString(), out totalSemImpostoValue))
+                                    totalSemImpostoValue = 0;
+
+                                int impostoPorcentagem = 0;
+                                if (!int.TryParse(dataRow.Cells["impostoPorcentagem"]?.Value?.ToString(), out impostoPorcentagem))
+                                    impostoPorcentagem = 0;
+
+                                string dataHoraOperacao = dataRow.Cells["dataHoraOperacao"]?.Value?.ToString() ?? string.Empty;
+
+                                // Escrever dados com espaçamento
+                                writer.WriteLine(
+                                    $"{AddSpacing(codigoBarras)},{AddSpacing(pagamento)},{AddSpacing(totalComImpostoValue.ToString())},{AddSpacing(impostoValor.ToString())},{AddSpacing(totalSemImpostoValue.ToString())},{AddSpacing(impostoPorcentagem.ToString())},{AddSpacing(dataHoraOperacao)}"
+                                );
+
+                                // Atualizar totais
+                                totalComImposto += totalComImpostoValue;
+                                totalSemImposto += totalSemImpostoValue;
+                                totalImposto += impostoValor;
+                                totalPercentColumn += impostoPorcentagem;
+
+                                if (impostoValor == 8)
+                                {
+                                    total8Percent += impostoValor;
+                                }
+                                else if (impostoValor == 10)
+                                {
+                                    total10Percent += impostoValor;
+                                }
+
+                                int totalPagamento = totalComImpostoValue;
+                                if (pagamento.Equals("Crédito", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    totalCredito += totalPagamento;
+                                }
+                                else if (pagamento.Equals("Dinheiro", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    totalDinheiro += totalPagamento;
+                                }
+                                else if (pagamento.Equals("Prazo", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    totalPrazo += totalPagamento;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erro ao processar a linha: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+
+                        // Linha separadora
+                        writer.WriteLine();
+                        writer.WriteLine(new string('-', 80));
+
+                        // Título Totais de Vendas
+                        writer.WriteLine("Totais de Vendas:");
+
+                        // Totais
+                        writer.WriteLine($"Total Sem Imposto,¥{totalSemImposto}");
+                        writer.WriteLine($"Total Com Imposto,¥{totalComImposto}");
+                        writer.WriteLine($"Total Imposto (8%),{total8Percent}%");
+                        writer.WriteLine($"Total Imposto (10%),{total10Percent}%");
+                        writer.WriteLine($"Total Imposto Cobrado,¥{totalImposto}");
+                        writer.WriteLine($"Total Porcentagem Imposto,{totalPercentColumn}");
+                        writer.WriteLine($"Total em Crédito,¥{totalCredito}");
+                        writer.WriteLine($"Total em Dinheiro,¥{totalDinheiro}");
+                        writer.WriteLine($"Total a Prazo,¥{totalPrazo}");
+
+                        MessageBox.Show("Relatório salvo como CSV com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar os dados em CSV: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // Função auxiliar para adicionar espaçamento
+        private string AddSpacing(string text, int width = 20)
+        {
+            return text.PadRight(width).Replace(",", " "); // Evita vírgulas nos dados
+        }
+
     }
 }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
