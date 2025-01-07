@@ -118,9 +118,28 @@ namespace PJT_CasaBrasil
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+    private void textBox1_TextChanged(object sender, EventArgs e)
+{
+    // Armazena o texto atual
+    string input = textBox2.Text;
 
+    // Remove todos os caracteres não numéricos
+    input = new string(input.Where(char.IsDigit).ToArray());
+
+    // Formata o número com separador de milhar
+    if (input.Length > 0)
+    {
+        long parsedNumber;
+        if (long.TryParse(input, out parsedNumber))
+        {
+                    // Aplica a formatação com separador de milhar
+                    textBox2.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "{0:N0}", parsedNumber);
+
+                    // Posiciona o cursor no final do texto
+                    textBox2.SelectionStart = textBox2.Text.Length;
         }
+    }
+}
+
     }
 }

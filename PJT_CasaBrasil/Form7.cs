@@ -1588,6 +1588,67 @@ namespace PJT_CasaBrasil
                 e.Handled = true;
             }
         }
+        private void txtCobrar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Armazena o texto atual
+                string input = txtCobrar.Text;
+
+                // Remove todos os caracteres não numéricos
+                input = new string(input.Where(char.IsDigit).ToArray());
+
+                // Formata o número com separador de milhar
+                if (input.Length > 0)
+                {
+                    long parsedNumber;
+                    if (long.TryParse(input, out parsedNumber))
+                    {
+                        // Aplica a formatação com separador de milhar
+                        txtCobrar.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "{0:N0}", parsedNumber);
+
+                        // Posiciona o cursor no final do texto
+                        txtCobrar.SelectionStart = txtCobrar.Text.Length;
+                    }
+                }
+
+                // Define a cultura brasileira para manipular os números formatados
+                var culture = System.Globalization.CultureInfo.GetCultureInfo("pt-BR");
+
+                // Verifica e converte os valores de entrada
+                if (decimal.TryParse(txtTotal.Text, System.Globalization.NumberStyles.Number, culture, out decimal total) &&
+                    decimal.TryParse(txtCobrar.Text.Replace(".", "").Replace(",", ""), System.Globalization.NumberStyles.Number, culture, out decimal pago))
+                {
+                    // Calcula o troco
+                    decimal troco = pago - total;
+
+                    // Verifica se o troco tem apenas uma casa decimal
+                    if (troco % 1 == 0)
+                    {
+                        // Se o troco for inteiro, exibe sem casas decimais
+                        label20.Text = $"¥{troco.ToString("N0", culture)}";
+                    }
+                    else
+                    {
+                        // Se o troco tiver casas decimais, exibe apenas uma casa decimal
+                        label20.Text = $"¥{troco.ToString("N1", culture)}";
+                    }
+                }
+                else
+                {
+                    // Limpa ou redefine o texto do label para um valor padrão
+                    label20.Text = "¥0.00";
+                }
+            }
+            catch
+            {
+                // Redefine o label em caso de erro inesperado
+                label20.Text = "¥0.00";
+            }
+        }
+
+
+
 
     }
 }
