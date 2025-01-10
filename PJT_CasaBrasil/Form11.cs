@@ -38,6 +38,12 @@ namespace PJT_CasaBrasil
             checkBox2.CheckedChanged += CheckBox_CheckedChanged;
             checkBox3.CheckedChanged += CheckBox_CheckedChanged;
             checkBox4.CheckedChanged += CheckBox_CheckedChanged;
+
+            // Configurações para o formulário
+            this.FormBorderStyle = FormBorderStyle.FixedDialog; // Desabilita redimensionamento
+            this.StartPosition = FormStartPosition.CenterScreen; // Abre centralizado na tela
+            this.WindowState = FormWindowState.Maximized;    // Configurações para o formulário
+        
         }
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)

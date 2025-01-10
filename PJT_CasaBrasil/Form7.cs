@@ -28,6 +28,11 @@ namespace PJT_CasaBrasil
             InitializeComponent();
             txtCodigoDeBarras.TextChanged += TxtCodigoDeBarras_TextChanged;
 
+            // Configurações para o formulário
+            this.FormBorderStyle = FormBorderStyle.FixedDialog; // Desabilita redimensionamento
+            this.StartPosition = FormStartPosition.CenterScreen; // Abre centralizado na tela
+            this.WindowState = FormWindowState.Maximized;    // Configura o formulário para abrir maximizado       
+
             InitializeDataTable();
             dataGrid1.DataSource = dataTable;
 
@@ -1647,9 +1652,10 @@ namespace PJT_CasaBrasil
             }
         }
 
+        private void Form7_Load(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }
 

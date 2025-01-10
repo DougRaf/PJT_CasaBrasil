@@ -23,6 +23,10 @@ namespace PJT_CasaBrasil
         public Form5()
         {
             InitializeComponent();
+            // Configurações para o formulário
+            this.FormBorderStyle = FormBorderStyle.FixedDialog; // Desabilita redimensionamento
+            this.StartPosition = FormStartPosition.CenterScreen; // Abre centralizado na tela
+            this.WindowState = FormWindowState.Maximized;    // Configura o formulário para abrir maximizado
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -242,6 +246,104 @@ namespace PJT_CasaBrasil
                 }
             }
         }
+
+
+
+       /* private void butto1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                DefaultExt = ".pdf",
+                FileName = "Relatorio_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    PdfDocument pdfDoc = new PdfDocument();
+                    PdfPage page = pdfDoc.AddPage();
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    XFont titleFont = new XFont("Arial", 12);
+                    XFont font = new XFont("Arial", 7);
+
+                    double startX = 30;
+                    double startY = 120;
+                    double currentY = startY;
+
+                    double[] columnWidths = { 80, 70, 80, 60, 70, 60, 120 };
+                    string[] headers = { "Código Barras", "Pagamento", "Total Com Imposto", "Imposto Valor", "Total Sem Imposto", "Imposto %", "Data/Hora Operação" };
+
+                    // Função para adicionar o cabeçalho da tabela
+                    void AddHeader()
+                    {
+                        double headerX = startX;
+                        foreach (var header in headers)
+                        {
+                            gfx.DrawString(header, font, XBrushes.Black, new XPoint(headerX, currentY));
+                            headerX += columnWidths[Array.IndexOf(headers, header)];
+                        }
+                        currentY += 20;
+                    }
+
+                    AddHeader();
+
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.IsNewRow) continue;
+
+                        // Verifica se há espaço suficiente na página
+                        if (currentY + 20 > page.Height - 60)
+                        {
+                            AddFooter(gfx, page); // Adiciona o rodapé antes de criar nova página
+                            page = pdfDoc.AddPage();
+                            gfx = XGraphics.FromPdfPage(page);
+                            currentY = startY;
+                            AddHeader();
+                        }
+
+                        startX = 30;
+                        foreach (var columnIndex in new[] {
+                    "codigoBarras", "pagamento", "totalComImposto", "impostoValor",
+                    "totalSemImposto", "impostoPorcentagem", "dataHoraOperacao"
+                })
+                        {
+                            string cellValue = row.Cells[columnIndex]?.Value?.ToString() ?? string.Empty;
+                            gfx.DrawString(cellValue, font, XBrushes.Black, new XPoint(startX, currentY));
+                            startX += columnWidths[Array.IndexOf(new[] {
+                        "codigoBarras", "pagamento", "totalComImposto", "impostoValor",
+                        "totalSemImposto", "impostoPorcentagem", "dataHoraOperacao"
+                    }, columnIndex)];
+                        }
+                        currentY += 15;
+                    }
+
+                    AddFooter(gfx, page); // Adiciona o rodapé na última página
+
+                    pdfDoc.Save(saveFileDialog.FileName);
+                    MessageBox.Show("Dados salvos como PDF com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar os dados em PDF: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }*/
+
+        // Função para adicionar o rodapé
+        private void AddFooter(XGraphics gfx, PdfPage page)
+        {
+            double footerY = page.Height - 50;
+            XFont font = new XFont("Arial", 7);
+
+            string dataHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            gfx.DrawLine(XPens.Black, 30, footerY - 10, page.Width - 30, footerY - 10);
+            gfx.DrawString("Data e Hora: " + dataHora, font, XBrushes.Black, new XPoint(30, footerY));
+            gfx.DrawString("Komatsu, Ishikawa-ken, Japão", font, XBrushes.Black, new XPoint(30, footerY + 15));
+        }
+
 
         /* private void button2_Click(object sender, EventArgs e)
          {
@@ -495,8 +597,148 @@ namespace PJT_CasaBrasil
             return text.PadRight(width).Replace(",", " "); // Evita vírgulas nos dados
         }
 
+        private void Form5_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            // Obtém a data selecionada no DateTimePicker
+            DateTime dataSelecionada = dateTimePicker1.Value.Date;
+
+            // Filtra os dados no DataGridView com base na data selecionada
+            FiltrarDadosPorData(dataSelecionada);
+
+            // Pergunta ao usuário se deseja salvar o relatório
+            DialogResult resultado = MessageBox.Show("Deseja salvar o relatório em PDF?", "Salvar Relatório", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resultado == DialogResult.Yes)
+            {
+                // Chama a função para gerar o relatório em PDF com os dados filtrados
+                GerarRelatorioPDF(dataSelecionada);
+            }
+        }
+
+        private void FiltrarDadosPorData(DateTime dataSelecionada)
+        {
+            // Conexão com o banco de dados
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // Consulta SQL para obter registros com base na data selecionada
+                    string query = "SELECT * FROM `vendas` WHERE DATE(dataHoraOperacao) = @DataSelecionada";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        // Adiciona o parâmetro para evitar SQL Injection
+                        cmd.Parameters.AddWithValue("@DataSelecionada", dataSelecionada);
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+
+                            // Preenche o DataGridView com os dados filtrados
+                            dataGridView1.DataSource = dataTable;
+                        }
+                    }
+                }
+                catch (MySqlException sqlEx)
+                {
+                    MessageBox.Show("Erro de banco de dados: " + sqlEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro inesperado: " + ex.Message);
+                }
+            }
+        }
+
+        private void GerarRelatorioPDF(DateTime dataSelecionada)
+        {
+            // Exibe a caixa de diálogo para salvar o arquivo PDF
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                DefaultExt = ".pdf",
+                FileName = "Relatorio_" + dataSelecionada.ToString("yyyyMMdd") + ".pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Cria o documento PDF
+                    PdfDocument pdfDoc = new PdfDocument();
+                    PdfPage page = pdfDoc.AddPage();
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    XFont titleFont = new XFont("Arial", 12);
+                    XFont font = new XFont("Arial", 7);
+
+                    double startX = 30;
+                    double startY = 120;
+                    double currentY = startY;
+
+                    double[] columnWidths = { 80, 70, 80, 60, 70, 60, 120 };
+                    string[] headers = { "Código Barras", "Pagamento", "Total Com Imposto", "Imposto Valor", "Total Sem Imposto", "Imposto %", "Data/Hora Operação" };
+
+                    // Função para adicionar o cabeçalho da tabela
+                    void AddHeader()
+                    {
+                        double headerX = startX;
+                        foreach (var header in headers)
+                        {
+                            gfx.DrawString(header, font, XBrushes.Black, new XPoint(headerX, currentY));
+                            headerX += columnWidths[Array.IndexOf(headers, header)];
+                        }
+                        currentY += 20;
+                    }
+
+                    AddHeader();
+
+                    // Laço para percorrer as linhas do DataGridView
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        if (row.IsNewRow) continue; // Ignora linhas novas
+
+                        startX = 30;
+                        foreach (var columnIndex in new[] {
+                    "codigoBarras", "pagamento", "totalComImposto", "impostoValor",
+                    "totalSemImposto", "impostoPorcentagem", "dataHoraOperacao"
+                })
+                        {
+                            string cellValue = row.Cells[columnIndex]?.Value?.ToString() ?? string.Empty;
+                            gfx.DrawString(cellValue, font, XBrushes.Black, new XPoint(startX, currentY));
+                            startX += columnWidths[Array.IndexOf(new[] {
+                        "codigoBarras", "pagamento", "totalComImposto", "impostoValor",
+                        "totalSemImposto", "impostoPorcentagem", "dataHoraOperacao"
+                    }, columnIndex)];
+                        }
+                        currentY += 15;
+                    }
+
+                    // Adiciona o rodapé
+                    AddFooter(gfx, page);
+
+                    // Salva o arquivo PDF no caminho selecionado
+                    pdfDoc.Save(saveFileDialog.FileName);
+                    MessageBox.Show("Relatório gerado com sucesso para a data: " + dataSelecionada.ToString("dd/MM/yyyy"), "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao gerar o relatório: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
     }
 }
+
 
 
 

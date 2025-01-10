@@ -26,6 +26,12 @@ namespace PJT_CasaBrasil
 
             // Configura o FileSystemWatcher
             ConfigurarWatcher();
+
+            // Configurações para o formulário
+            this.FormBorderStyle = FormBorderStyle.FixedDialog; // Desabilita redimensionamento
+            this.StartPosition = FormStartPosition.CenterScreen; // Abre centralizado na tela
+            this.WindowState = FormWindowState.Maximized;    // Configura o formulário para abrir maximizado       
+
         }
 
             private void DispararMessageBox()
