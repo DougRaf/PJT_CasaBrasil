@@ -55,7 +55,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(263, 8);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1085, 475);
+            this.dataGridView1.Size = new System.Drawing.Size(898, 475);
             this.dataGridView1.TabIndex = 26;
             // 
             // pictureBox1
@@ -106,7 +106,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(1170, 497);
+            this.label5.Location = new System.Drawing.Point(986, 491);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label5.Size = new System.Drawing.Size(66, 14);
@@ -120,7 +120,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(1318, 491);
+            this.label6.Location = new System.Drawing.Point(1134, 485);
             this.label6.Name = "label6";
             this.label6.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label6.Size = new System.Drawing.Size(29, 22);
@@ -133,7 +133,7 @@
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox3.Image = global::PJT_CasaBrasil.Properties.Resources.logo_244_200;
-            this.pictureBox3.Location = new System.Drawing.Point(1237, 498);
+            this.pictureBox3.Location = new System.Drawing.Point(1053, 492);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(82, 12);
@@ -161,9 +161,7 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.AutoSize = true;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.dataGridView1);
@@ -176,10 +174,11 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(1, 44);
+            this.panel1.Location = new System.Drawing.Point(8, 43);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1357, 515);
+            this.panel1.Size = new System.Drawing.Size(1166, 507);
             this.panel1.TabIndex = 54;
+            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
             // label2
             // 
@@ -196,7 +195,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(254)))), ((int)(((byte)(82)))));
-            this.ClientSize = new System.Drawing.Size(1370, 593);
+            this.ClientSize = new System.Drawing.Size(1189, 579);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form5";

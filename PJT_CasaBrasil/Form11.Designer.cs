@@ -209,7 +209,6 @@
             this.Name = "Form11";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Casa Brasil em Komatsu Ishikawa-Ken / Japão";
-            this.Load += new System.EventHandler(this.Form11_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

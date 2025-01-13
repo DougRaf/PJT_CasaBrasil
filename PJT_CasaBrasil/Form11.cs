@@ -162,10 +162,6 @@ namespace PJT_CasaBrasil
             }
         }
 
-        private void Form11_Load(object sender, EventArgs e)
-        {
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             string termoPesquisa = textBox1.Text.Trim();
@@ -213,6 +209,7 @@ namespace PJT_CasaBrasil
                         XFont fontHeader = new XFont("Arial", 8);  // Fonte para o cabeçalho da tabela
                         XFont fontContent = new XFont("Arial", 5); // Fonte para os dados
                         XFont fontTotal = new XFont("Arial", 9);   // Fonte para os totais
+                        XFont font = new XFont("Arial", 7);        // Fonte para o footer
 
                         // Posição inicial
                         double posX = 20;
@@ -237,15 +234,17 @@ namespace PJT_CasaBrasil
                         gfx.DrawString("Quantidade", fontHeader, XBrushes.Black, new XPoint(posX + 150, posY));
                         gfx.DrawString("Preço Custo", fontHeader, XBrushes.Black, new XPoint(posX + 250, posY));
                         gfx.DrawString("Preço Venda", fontHeader, XBrushes.Black, new XPoint(posX + 350, posY));
-                        gfx.DrawString("Imposto", fontHeader, XBrushes.Black, new XPoint(posX + 450, posY));
+                        gfx.DrawString("V.Estoque", fontHeader, XBrushes.Black, new XPoint(posX + 450, posY));
 
                         posY += 20;
 
-                        // Linhas de dados
-                        decimal totalQuantidade = 0;
-                        decimal totalPrecoVenda = 0;
-                        decimal totalPrecoCustoItem = 0; // Para somar o total de (quantidade * precoCusto) sem casas decimais
+                        // Inicializar totais
+                        int totalQuantidade = 0;
+                        int totalPrecoCusto = 0;
+                        int totalPrecoVenda = 0;
+                        int totalValorEstoque = 0;
 
+                        // Linhas de dados
                         foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
                             if (!row.IsNewRow)
@@ -253,46 +252,29 @@ namespace PJT_CasaBrasil
                                 string nomeProduto = row.Cells["nome_produto"].Value?.ToString() ?? "N/A";
 
                                 // Tentar converter a quantidade
-                                int quantidade = 0;
-                                if (!int.TryParse(row.Cells["quantidade"].Value?.ToString(), out quantidade))
-                                {
-                                    quantidade = 0;
-                                }
+                                int quantidade = int.TryParse(row.Cells["quantidade"].Value?.ToString(), out var q) ? q : 0;
 
                                 // Tentar converter o preço de custo
-                                int precoCusto = 0;  // Agora estamos tratando como inteiro para eliminar casas decimais
-                                if (!int.TryParse(row.Cells["preco_custo"].Value?.ToString(), out precoCusto))
-                                {
-                                    precoCusto = 0;
-                                }
+                                int precoCusto = int.TryParse(row.Cells["preco_custo"].Value?.ToString(), out var pc) ? pc : 0;
 
                                 // Tentar converter o preço de venda
-                                int precoVenda = 0;  // Agora estamos tratando como inteiro para eliminar casas decimais
-                                if (!int.TryParse(row.Cells["preco_venda"].Value?.ToString(), out precoVenda))
-                                {
-                                    precoVenda = 0;
-                                }
+                                int precoVenda = int.TryParse(row.Cells["preco_venda"].Value?.ToString(), out var pv) ? pv : 0;
 
-                                // Tentar converter o imposto
-                                decimal imposto = 0;
-                                if (!decimal.TryParse(row.Cells["imposto"].Value?.ToString(), out imposto))
-                                {
-                                    imposto = 0;
-                                }
+                                // Cálculo do valor estoque
+                                int vEstoque = quantidade * precoVenda;
 
-                                // Soma dos totais
+                                // Acumular totais
                                 totalQuantidade += quantidade;
-                                totalPrecoVenda += precoVenda;
-
-                                // Cálculo do total de (quantidade * preço de custo) sem casas decimais
-                                totalPrecoCustoItem += quantidade * precoCusto;
+                                totalPrecoCusto += precoCusto; // Soma unitária do preço custo
+                                totalPrecoVenda += precoVenda; // Soma unitária do preço venda
+                                totalValorEstoque += vEstoque; // Valor total do estoque
 
                                 // Desenho dos dados
                                 gfx.DrawString(nomeProduto, fontContent, XBrushes.Black, new XPoint(posX, posY));
-                                gfx.DrawString(quantidade.ToString("F0"), fontContent, XBrushes.Black, new XPoint(posX + 150, posY));
-                                gfx.DrawString("¥" + precoCusto.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 250, posY));  // Com símbolo e sem casas decimais
-                                gfx.DrawString("¥" + precoVenda.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 350, posY));  // Com símbolo e sem casas decimais
-                                gfx.DrawString(imposto.ToString("F0"), fontContent, XBrushes.Black, new XPoint(posX + 450, posY));
+                                gfx.DrawString(quantidade.ToString(), fontContent, XBrushes.Black, new XPoint(posX + 150, posY));
+                                gfx.DrawString("¥" + precoCusto.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 250, posY));
+                                gfx.DrawString("¥" + precoVenda.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 350, posY));
+                                gfx.DrawString("¥" + vEstoque.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 450, posY));
 
                                 posY += 20;
 
@@ -310,16 +292,31 @@ namespace PJT_CasaBrasil
                         gfx.DrawLine(XPens.Black, posX, posY, posX + 500, posY);
                         posY += 10;
 
-                        // Totais com o valor total (quantidade * preço custo) sem casas decimais
-                        gfx.DrawString("Totais:", fontTotal, XBrushes.Black, new XPoint(posX, posY));
-                        gfx.DrawString("Quantidade: " + totalQuantidade.ToString("F0"), fontTotal, XBrushes.Black, new XPoint(posX + 100, posY));
+                        // Adicionar espaçamento antes do título do relatório
+                        posY += 10;
 
-                        // Substitui o "Preço Custo" pelo total calculado
-                        gfx.DrawString("Total Preço Custo: ¥" + totalPrecoCustoItem.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX + 250, posY));  // Total calculado
+                        // Relatório Total
+                        gfx.DrawString("Relatório Total:", fontTotal, XBrushes.Black, new XPoint(posX, posY));
+                        posY += 10;
 
-                        gfx.DrawString("Preço Venda: ¥" + totalPrecoVenda.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX + 400, posY));  // Com símbolo e sem casas decimais
+                        gfx.DrawString("Total Quantidade: " + totalQuantidade.ToString(), fontTotal, XBrushes.Black, new XPoint(posX, posY));
+                        posY += 10;
 
-                        posY += 10; // Menor espaço abaixo da linha de totais
+                        gfx.DrawString("Total Preço Custo: ¥" + totalPrecoCusto.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX, posY));
+                        posY += 10;
+
+                        gfx.DrawString("Total Preço Venda: ¥" + totalPrecoVenda.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX, posY));
+                        posY += 10;
+
+                        gfx.DrawString("Total V.Estoque: ¥" + totalValorEstoque.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX, posY));
+
+                        // Adicionar Footer com data, hora e local
+                        double currentY = page.Height - 50;
+                        string dataHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        gfx.DrawLine(XPens.Black, 30, currentY - 10, page.Width - 30, currentY - 10);
+                        gfx.DrawString("Data e Hora: " + dataHora, font, XBrushes.Black, new XPoint(30, currentY));
+                        currentY += 15;
+                        gfx.DrawString("Komatsu, Ishikawa-ken, Japão", font, XBrushes.Black, new XPoint(30, currentY));
 
                         // Salvar PDF
                         pdf.Save(saveFileDialog.FileName);
@@ -332,9 +329,8 @@ namespace PJT_CasaBrasil
                 }
             }
         }
-
     }
-
-
 }
+
+
 
