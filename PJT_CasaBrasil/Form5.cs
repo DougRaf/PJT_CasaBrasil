@@ -88,6 +88,7 @@ namespace PJT_CasaBrasil
             }
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
             // Verifica se o checkbox está checado
@@ -122,40 +123,57 @@ namespace PJT_CasaBrasil
                     XFont titleFont = new XFont("Arial", 12);
                     XFont font = new XFont("Arial", 7);
 
-                    string logoPath = "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\casabrasil.png";
-                    if (System.IO.File.Exists(logoPath))
-                    {
-                        XImage logoImage = XImage.FromFile(logoPath);
-                        gfx.DrawImage(logoImage, 50, 40, 55, 55);
-                    }
-
-                    gfx.DrawString("Relatório de Vendas", titleFont, XBrushes.Black, new XPoint(120, 65));
-
-                    // Ajuste do deslocamento inicial
-                    double startX = 30;
-                    double startY = 120;
-                    double currentY = startY;
-
-                    // Larguras ajustadas
+                    double startX, currentY;
                     double[] columnWidths = { 80, 70, 80, 60, 70, 60, 120 };
                     string[] headers = { "Código Barras", "Pagamento", "Total C/ Imp.", "Imp. Valor", "Total S/ Imp.", "Imp. %", "Data/Hora Operação" };
+                    double maxHeightPerPage = page.Height - 100; // Margem para o rodapé
 
-                    // Cabeçalhos
-                    for (int i = 0; i < headers.Length; i++)
+                    void AddPageFooter()
                     {
-                        gfx.DrawString(headers[i], font, XBrushes.Black, new XPoint(startX, currentY));
-                        startX += columnWidths[i];
+                        double footerY = page.Height - 50;
+                        string dataHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        gfx.DrawLine(XPens.Black, 30, footerY - 10, page.Width - 30, footerY - 10);
+                        gfx.DrawString("Data e Hora: " + dataHora, font, XBrushes.Black, new XPoint(30, footerY));
+                        gfx.DrawString("Komatsu, Ishikawa-ken, Japão", font, XBrushes.Black, new XPoint(30, footerY + 15));
                     }
 
-                    currentY += 20;
+                    void DrawHeader()
+                    {
+                        gfx.DrawString("Relatório de Vendas", titleFont, XBrushes.Black, new XPoint(120, 65));
 
-                    int totalComImposto = 0, totalSemImposto = 0, totalImposto = 0;
-                    int total8Percent = 0, total10Percent = 0;
-                    int totalCredito = 0, totalDinheiro = 0, totalPrazo = 0; int totalPercentColumn = 0;
+                        startX = 30;
+                        currentY = 120;
+
+                        for (int i = 0; i < headers.Length; i++)
+                        {
+                            gfx.DrawString(headers[i], font, XBrushes.Black, new XPoint(startX, currentY));
+                            startX += columnWidths[i];
+                        }
+
+                        currentY += 20; // Ajusta a posição para os dados
+                    }
+
+                    DrawHeader();
+
+                    // Variáveis de cálculo de totais
+                    int totalComImposto = 0, totalSemImposto = 0, totalImposto = 0, totalPercentColumn = 0;
+                    int total8Percent = 0, total10Percent = 0, totalCredito = 0, totalDinheiro = 0, totalPrazo = 0;
 
                     foreach (DataGridViewRow row in dataGridView1.Rows)
                     {
                         if (row.IsNewRow) continue;
+
+                        // Verifica se a altura máxima foi alcançada
+                        if (currentY > maxHeightPerPage)
+                        {
+                            AddPageFooter(); // Adicionar rodapé da página atual
+
+                            // Criar nova página e redefinir gráficos
+                            page = pdfDoc.AddPage();
+                            gfx = XGraphics.FromPdfPage(page);
+                            DrawHeader(); // Redesenhar cabeçalho
+                            currentY = 140; // Redefinir a posição
+                        }
 
                         startX = 30;
                         foreach (var columnIndex in new[] {
@@ -169,74 +187,30 @@ namespace PJT_CasaBrasil
                     }, columnIndex)];
                         }
 
-                        // Cálculos dos totais
-                        int valorComImposto = Convert.ToInt32(row.Cells["totalComImposto"].Value ?? 0);  // Ex: 500
-                        int valorSemImposto = Convert.ToInt32(row.Cells["totalSemImposto"].Value ?? 0);  // Ex: 460
-                        int impostoValor = Convert.ToInt32(row.Cells["impostoValor"].Value ?? 0);  // Ex: 40
-                        int impostoPorcentagem = Convert.ToInt32(row.Cells["impostoPorcentagem"].Value ?? 0);  // Ex: 8
+                        // Cálculos de totais
+                        int valorComImposto = Convert.ToInt32(row.Cells["totalComImposto"].Value ?? 0);
+                        int valorSemImposto = Convert.ToInt32(row.Cells["totalSemImposto"].Value ?? 0);
+                        int impostoValor = Convert.ToInt32(row.Cells["impostoValor"].Value ?? 0);
+                        int impostoPorcentagem = Convert.ToInt32(row.Cells["impostoPorcentagem"].Value ?? 0);
 
                         totalComImposto += valorComImposto;
                         totalSemImposto += valorSemImposto;
                         totalImposto += impostoValor;
                         totalPercentColumn += impostoPorcentagem;
 
-                    
+                        if (impostoValor == 8) total8Percent += impostoValor;
+                        else if (impostoValor == 10) total10Percent += impostoValor;
 
-                        // Verifica os percentuais de imposto e soma a porcentagem
-                        if (impostoValor == 8)
-                        {
-                            total8Percent += impostoValor;  // Soma a porcentagem de 8%
-                        }
-                        else if (impostoValor == 10)
-                        {
-                            total10Percent += impostoValor;  // Soma a porcentagem de 10%
-                        }
-
-                        // Soma por tipo de pagamento
                         string pagamento = row.Cells["pagamento"]?.Value?.ToString() ?? string.Empty;
-                        if (pagamento.Equals("Crédito", StringComparison.OrdinalIgnoreCase))
-                            totalCredito += valorComImposto;
-                        if (pagamento.Equals("Dinheiro", StringComparison.OrdinalIgnoreCase))
-                            totalDinheiro += valorComImposto;
-                        if (pagamento.Equals("Prazo", StringComparison.OrdinalIgnoreCase))
-                            totalPrazo += valorComImposto;
+                        if (pagamento.Equals("Crédito", StringComparison.OrdinalIgnoreCase)) totalCredito += valorComImposto;
+                        if (pagamento.Equals("Dinheiro", StringComparison.OrdinalIgnoreCase)) totalDinheiro += valorComImposto;
+                        if (pagamento.Equals("Prazo", StringComparison.OrdinalIgnoreCase)) totalPrazo += valorComImposto;
 
                         currentY += 15;
                     }
 
-                    // Linha separadora
-                    currentY += 10;
-                    gfx.DrawLine(XPens.Black, 30, currentY, page.Width - 30, currentY);
-                    currentY += 20;
-
-                    // Título "Total"
-                    gfx.DrawString("Total", titleFont, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 20;
-
-                    // Totais em linhas separadas
-                    gfx.DrawString("Total Sem Imposto: ¥" + totalSemImposto, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total Com Imposto: ¥" + totalComImposto, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total Imposto Cobrado: ¥" + totalPercentColumn, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total Imposto (8%): " + total8Percent + "%", font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total Imposto (10%): " + total10Percent + "%", font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total em Crédito: ¥" + totalCredito, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total em Dinheiro: ¥" + totalDinheiro, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Total a Prazo: ¥" + totalPrazo, font, XBrushes.Black, new XPoint(30, currentY));
-
-                    // Footer com data, hora e local
-                    currentY = page.Height - 50;
-                    string dataHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                    gfx.DrawLine(XPens.Black, 30, currentY - 10, page.Width - 30, currentY - 10);
-                    gfx.DrawString("Data e Hora: " + dataHora, font, XBrushes.Black, new XPoint(30, currentY));
-                    currentY += 15;
-                    gfx.DrawString("Komatsu, Ishikawa-ken, Japão", font, XBrushes.Black, new XPoint(30, currentY));
+                    // Adicionar o rodapé na última página
+                    AddPageFooter();
 
                     pdfDoc.Save(saveFileDialog.FileName);
                     MessageBox.Show("Relatório salvo como PDF com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -247,6 +221,7 @@ namespace PJT_CasaBrasil
                 }
             }
         }
+
 
 
 
