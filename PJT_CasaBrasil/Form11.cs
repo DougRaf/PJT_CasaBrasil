@@ -205,31 +205,27 @@ namespace PJT_CasaBrasil
 
                         PdfSharp.Pdf.PdfPage page = pdf.AddPage();
                         XGraphics gfx = XGraphics.FromPdfPage(page);
-                        XFont fontTitle = new XFont("Arial", 20);  // Fonte para o título
-                        XFont fontHeader = new XFont("Arial", 8);  // Fonte para o cabeçalho da tabela
-                        XFont fontContent = new XFont("Arial", 5); // Fonte para os dados
-                        XFont fontTotal = new XFont("Arial", 9);   // Fonte para os totais
-                        XFont font = new XFont("Arial", 7);        // Fonte para o footer
+                        XFont fontTitle = new XFont("Arial", 20);
+                        XFont fontHeader = new XFont("Arial", 8);
+                        XFont fontContent = new XFont("Arial", 5);
+                        XFont fontTotal = new XFont("Arial", 9);
+                        XFont font = new XFont("Arial", 7);
 
-                        // Posição inicial
                         double posX = 20;
                         double posY = 30;
 
-                        // Desenhar o logo
-                        string logoPath = "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\casabrasil.png"; // Caminho do logo
+                        string logoPath = "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Img\\casabrasil.png";
                         if (System.IO.File.Exists(logoPath))
                         {
                             XImage logoImage = XImage.FromFile(logoPath);
-                            gfx.DrawImage(logoImage, posX, posY, 55, 55); // Logo com tamanho reduzido
-                            posX += 70; // Ajustar posição do título
+                            gfx.DrawImage(logoImage, posX, posY, 55, 55);
+                            posX += 70;
                         }
 
-                        // Título
                         gfx.DrawString("Exportação de Dados", fontTitle, XBrushes.Black, new XPoint(posX, posY + 20));
-                        posX = 20; // Resetar posição X
-                        posY += 80; // Ajustar posição Y
+                        posX = 20;
+                        posY += 80;
 
-                        // Cabeçalho da tabela
                         gfx.DrawString("Nome do Produto", fontHeader, XBrushes.Black, new XPoint(posX, posY));
                         gfx.DrawString("Quantidade", fontHeader, XBrushes.Black, new XPoint(posX + 150, posY));
                         gfx.DrawString("Preço Custo", fontHeader, XBrushes.Black, new XPoint(posX + 250, posY));
@@ -238,64 +234,50 @@ namespace PJT_CasaBrasil
 
                         posY += 20;
 
-                        // Inicializar totais
                         int totalQuantidade = 0;
                         int totalPrecoCusto = 0;
                         int totalPrecoVenda = 0;
                         int totalValorEstoque = 0;
 
-                        // Linhas de dados
                         foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
                             if (!row.IsNewRow)
                             {
                                 string nomeProduto = row.Cells["nome_produto"].Value?.ToString() ?? "N/A";
 
-                                // Tentar converter a quantidade
                                 int quantidade = int.TryParse(row.Cells["quantidade"].Value?.ToString(), out var q) ? q : 0;
-
-                                // Tentar converter o preço de custo
                                 int precoCusto = int.TryParse(row.Cells["preco_custo"].Value?.ToString(), out var pc) ? pc : 0;
-
-                                // Tentar converter o preço de venda
                                 int precoVenda = int.TryParse(row.Cells["preco_venda"].Value?.ToString(), out var pv) ? pv : 0;
 
-                                // Cálculo do valor estoque
-                                int vEstoque = quantidade * precoVenda;
+                                int custoTotal = quantidade * precoCusto;
+                                int vendaTotal = quantidade * precoVenda;
+                                int vEstoque = vendaTotal;
 
-                                // Acumular totais
                                 totalQuantidade += quantidade;
-                                totalPrecoCusto += precoCusto; // Soma unitária do preço custo
-                                totalPrecoVenda += precoVenda; // Soma unitária do preço venda
-                                totalValorEstoque += vEstoque; // Valor total do estoque
+                                totalPrecoCusto += custoTotal;
+                                totalPrecoVenda += vendaTotal;
+                                totalValorEstoque += vEstoque;
 
-                                // Desenho dos dados
                                 gfx.DrawString(nomeProduto, fontContent, XBrushes.Black, new XPoint(posX, posY));
                                 gfx.DrawString(quantidade.ToString(), fontContent, XBrushes.Black, new XPoint(posX + 150, posY));
-                                gfx.DrawString("¥" + precoCusto.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 250, posY));
-                                gfx.DrawString("¥" + precoVenda.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 350, posY));
+                                gfx.DrawString("¥" + custoTotal.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 250, posY));
+                                gfx.DrawString("¥" + vendaTotal.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 350, posY));
                                 gfx.DrawString("¥" + vEstoque.ToString("#,0").Replace(",", "."), fontContent, XBrushes.Black, new XPoint(posX + 450, posY));
 
                                 posY += 20;
 
-                                // Verificar se precisa de nova página
                                 if (posY > page.Height - 50)
                                 {
                                     page = pdf.AddPage();
                                     gfx = XGraphics.FromPdfPage(page);
-                                    posY = 30; // Resetar posição Y
+                                    posY = 30;
                                 }
                             }
                         }
 
-                        // Linha de separação
                         gfx.DrawLine(XPens.Black, posX, posY, posX + 500, posY);
                         posY += 10;
 
-                        // Adicionar espaçamento antes do título do relatório
-                        posY += 10;
-
-                        // Relatório Total
                         gfx.DrawString("Relatório Total:", fontTotal, XBrushes.Black, new XPoint(posX, posY));
                         posY += 10;
 
@@ -310,7 +292,6 @@ namespace PJT_CasaBrasil
 
                         gfx.DrawString("Total V.Estoque: ¥" + totalValorEstoque.ToString("#,0").Replace(",", "."), fontTotal, XBrushes.Black, new XPoint(posX, posY));
 
-                        // Adicionar Footer com data, hora e local
                         double currentY = page.Height - 50;
                         string dataHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
                         gfx.DrawLine(XPens.Black, 30, currentY - 10, page.Width - 30, currentY - 10);
@@ -318,7 +299,6 @@ namespace PJT_CasaBrasil
                         currentY += 15;
                         gfx.DrawString("Komatsu, Ishikawa-ken, Japão", font, XBrushes.Black, new XPoint(30, currentY));
 
-                        // Salvar PDF
                         pdf.Save(saveFileDialog.FileName);
                         MessageBox.Show("PDF salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -329,7 +309,9 @@ namespace PJT_CasaBrasil
                 }
             }
         }
+
     }
+
 }
 
 
