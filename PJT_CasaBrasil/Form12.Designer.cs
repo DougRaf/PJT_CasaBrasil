@@ -63,20 +63,20 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label10.Location = new System.Drawing.Point(58, 105);
+            this.label10.Location = new System.Drawing.Point(178, 123);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(430, 73);
+            this.label10.Size = new System.Drawing.Size(325, 55);
             this.label10.TabIndex = 46;
             this.label10.Text = "Lançamentos";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(642, 60);
+            this.pictureBox1.Location = new System.Drawing.Point(86, 92);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(448, 149);
+            this.pictureBox1.Size = new System.Drawing.Size(106, 86);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
@@ -109,7 +109,7 @@
             this.label.AutoSize = true;
             this.label.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label.Location = new System.Drawing.Point(482, 123);
+            this.label.Location = new System.Drawing.Point(514, 123);
             this.label.Name = "label";
             this.label.Size = new System.Drawing.Size(122, 55);
             this.label.TabIndex = 54;
@@ -140,7 +140,7 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label14.Location = new System.Drawing.Point(92, 90);
+            this.label14.Location = new System.Drawing.Point(182, 92);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(217, 33);
             this.label14.TabIndex = 57;
@@ -319,7 +319,7 @@
             this.dataGrid1.BackgroundColor = System.Drawing.Color.Lavender;
             this.dataGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGrid1.CaptionBackColor = System.Drawing.Color.RoyalBlue;
-            this.dataGrid1.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGrid1.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGrid1.CaptionForeColor = System.Drawing.Color.White;
             this.dataGrid1.DataMember = "";
             this.dataGrid1.FlatMode = true;
@@ -330,7 +330,7 @@
             this.dataGrid1.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGrid1.HeaderForeColor = System.Drawing.Color.Lavender;
             this.dataGrid1.LinkColor = System.Drawing.Color.Teal;
-            this.dataGrid1.Location = new System.Drawing.Point(642, 216);
+            this.dataGrid1.Location = new System.Drawing.Point(642, 49);
             this.dataGrid1.Name = "dataGrid1";
             this.dataGrid1.ParentRowsBackColor = System.Drawing.Color.Lavender;
             this.dataGrid1.ParentRowsForeColor = System.Drawing.Color.MidnightBlue;
@@ -338,7 +338,7 @@
             this.dataGrid1.RowHeadersVisible = false;
             this.dataGrid1.SelectionBackColor = System.Drawing.Color.Teal;
             this.dataGrid1.SelectionForeColor = System.Drawing.Color.PaleGreen;
-            this.dataGrid1.Size = new System.Drawing.Size(449, 379);
+            this.dataGrid1.Size = new System.Drawing.Size(449, 546);
             this.dataGrid1.TabIndex = 65;
             // 
             // label1

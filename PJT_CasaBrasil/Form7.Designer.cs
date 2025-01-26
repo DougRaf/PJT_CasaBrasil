@@ -99,7 +99,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(25, 528);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(468, 79);
+            this.button3.Size = new System.Drawing.Size(468, 48);
             this.button3.TabIndex = 12;
             this.button3.Text = "Encerramento do Caixa";
             this.button3.UseVisualStyleBackColor = true;
@@ -122,7 +122,7 @@
             this.dataGrid1.BackgroundColor = System.Drawing.Color.Lavender;
             this.dataGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGrid1.CaptionBackColor = System.Drawing.Color.RoyalBlue;
-            this.dataGrid1.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGrid1.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGrid1.CaptionForeColor = System.Drawing.Color.White;
             this.dataGrid1.DataMember = "";
             this.dataGrid1.FlatMode = true;
@@ -134,7 +134,7 @@
             this.dataGrid1.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGrid1.HeaderForeColor = System.Drawing.Color.Lavender;
             this.dataGrid1.LinkColor = System.Drawing.Color.Teal;
-            this.dataGrid1.Location = new System.Drawing.Point(499, 183);
+            this.dataGrid1.Location = new System.Drawing.Point(499, 10);
             this.dataGrid1.Margin = new System.Windows.Forms.Padding(1);
             this.dataGrid1.Name = "dataGrid1";
             this.dataGrid1.ParentRowsBackColor = System.Drawing.Color.Lavender;
@@ -144,7 +144,7 @@
             this.dataGrid1.RowHeadersVisible = false;
             this.dataGrid1.SelectionBackColor = System.Drawing.Color.Teal;
             this.dataGrid1.SelectionForeColor = System.Drawing.Color.PaleGreen;
-            this.dataGrid1.Size = new System.Drawing.Size(449, 379);
+            this.dataGrid1.Size = new System.Drawing.Size(449, 609);
             this.dataGrid1.TabIndex = 4;
             // 
             // txtNumeracao
@@ -272,7 +272,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label10.Location = new System.Drawing.Point(35, 57);
+            this.label10.Location = new System.Drawing.Point(27, 77);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(430, 73);
             this.label10.TabIndex = 27;
@@ -291,7 +291,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(499, 568);
+            this.button5.Location = new System.Drawing.Point(25, 582);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(252, 39);
             this.button5.TabIndex = 14;
@@ -301,9 +301,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(757, 568);
+            this.button6.Location = new System.Drawing.Point(283, 582);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(191, 39);
+            this.button6.Size = new System.Drawing.Size(210, 39);
             this.button6.TabIndex = 15;
             this.button6.Text = "Cancelar venda";
             this.button6.UseVisualStyleBackColor = true;
@@ -352,9 +352,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(499, 31);
+            this.pictureBox1.Location = new System.Drawing.Point(25, 10);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(449, 149);
+            this.pictureBox1.Size = new System.Drawing.Size(154, 71);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 17;
             this.pictureBox1.TabStop = false;

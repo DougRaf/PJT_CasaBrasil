@@ -1474,6 +1474,20 @@ namespace PJT_CasaBrasil
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
+            if (double.TryParse(txtTotal.Text, out double value))
+            {
+                // Remove as casas decimais
+                txtTotal.Text = Math.Floor(value).ToString();
+                txtTotal.SelectionStart = txtTotal.Text.Length; // Coloca o cursor no final
+            }
+            else if (!string.IsNullOrWhiteSpace(txtTotal.Text))
+            {
+                // Remove caracteres inválidos (mantém apenas números)
+                txtTotal.Text = new string(txtTotal.Text.Where(char.IsDigit).ToArray());
+                txtTotal.SelectionStart = txtTotal.Text.Length;
+            }
+
+
             // Chama o método para atualizar o total de vendas
             AtualizarTotalVenda();
 
