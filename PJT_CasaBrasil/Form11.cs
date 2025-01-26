@@ -169,6 +169,7 @@ namespace PJT_CasaBrasil
             if (!checkBox1.Checked && !checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
             {
                 MessageBox.Show("Por favor, escolha pelo menos uma opção.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             if (checkBox2.Checked)
@@ -271,6 +272,14 @@ namespace PJT_CasaBrasil
                                     page = pdf.AddPage();
                                     gfx = XGraphics.FromPdfPage(page);
                                     posY = 30;
+
+                                    gfx.DrawString("Nome do Produto", fontHeader, XBrushes.Black, new XPoint(posX, posY));
+                                    gfx.DrawString("Quantidade", fontHeader, XBrushes.Black, new XPoint(posX + 150, posY));
+                                    gfx.DrawString("Preço Custo", fontHeader, XBrushes.Black, new XPoint(posX + 250, posY));
+                                    gfx.DrawString("Preço Venda", fontHeader, XBrushes.Black, new XPoint(posX + 350, posY));
+                                    gfx.DrawString("V.Estoque", fontHeader, XBrushes.Black, new XPoint(posX + 450, posY));
+
+                                    posY += 20;
                                 }
                             }
                         }
@@ -310,6 +319,11 @@ namespace PJT_CasaBrasil
             }
         }
 
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

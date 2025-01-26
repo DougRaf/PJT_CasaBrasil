@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PJT_CasaBrasil
@@ -191,5 +192,22 @@ namespace PJT_CasaBrasil
             _fileWatcher?.Dispose();
             base.OnFormClosing(e);
         }
+
+        private void txtTotal_TextChanged(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtTotal.Text, out double value))
+            {
+                // Remove as casas decimais
+                txtTotal.Text = Math.Floor(value).ToString();
+                txtTotal.SelectionStart = txtTotal.Text.Length; // Coloca o cursor no final
+            }
+            else if (!string.IsNullOrWhiteSpace(txtTotal.Text))
+            {
+                // Remove caracteres inválidos (mantém apenas números)
+                txtTotal.Text = new string(txtTotal.Text.Where(char.IsDigit).ToArray());
+                txtTotal.SelectionStart = txtTotal.Text.Length;
+            }
+        }
+
     }
 }

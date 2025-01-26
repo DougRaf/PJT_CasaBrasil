@@ -83,6 +83,7 @@
             this.checkBox2.TabIndex = 21;
             this.checkBox2.Text = "Produtos";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 

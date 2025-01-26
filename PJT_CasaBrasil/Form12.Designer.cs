@@ -361,6 +361,7 @@
             this.txtTotal.Size = new System.Drawing.Size(157, 31);
             this.txtTotal.TabIndex = 77;
             this.txtTotal.TabStop = false;
+            this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
             // 
             // Form12
             // 
