@@ -3,30 +3,6 @@
   "WorkspaceRootPath": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form13.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form13.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -35,12 +11,32 @@
       "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form11.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|c:\\pjt_casabrasil\\pjt_casabrasil\\form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form9.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{06E8AEA0-4125-442D-A343-F6821A010AE4}|PJT_CasaBrasil.csproj|solutionrelative:form12.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "Form5.cs",
               "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form5.cs",
               "RelativeDocumentMoniker": "Form5.cs",
@@ -67,67 +63,6 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Form7.cs",
-              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
-              "RelativeDocumentMoniker": "Form7.cs",
-              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
-              "RelativeToolTip": "Form7.cs",
-              "ViewState": "AgIAAMEFAAAAAAAAAAAUwMcFAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T08:12:07.502Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Form7.cs [Design]",
-              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
-              "RelativeDocumentMoniker": "Form7.cs",
-              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs [Design]",
-              "RelativeToolTip": "Form7.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T08:07:52.78Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form9.cs [Design]",
-              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form9.cs",
-              "RelativeDocumentMoniker": "Form9.cs",
-              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form9.cs [Design]",
-              "RelativeToolTip": "Form9.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T08:07:48.514Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form10.cs [Design]",
-              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form10.cs",
-              "RelativeDocumentMoniker": "Form10.cs",
-              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form10.cs [Design]",
-              "RelativeToolTip": "Form10.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T08:07:39.83Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form13.cs [Design]",
-              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form13.cs",
-              "RelativeDocumentMoniker": "Form13.cs",
-              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form13.cs [Design]",
-              "RelativeToolTip": "Form13.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T08:07:28.905Z",
-              "EditorCaption": " [Design]"
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
@@ -137,7 +72,52 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Form7.cs",
+              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
+              "RelativeDocumentMoniker": "Form7.cs",
+              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
+              "RelativeToolTip": "Form7.cs",
+              "ViewState": "AgIAAMEFAAAAAAAAAAAUwMcFAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T08:12:07.502Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "Form7.cs [Design]",
+              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs",
+              "RelativeDocumentMoniker": "Form7.cs",
+              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form7.cs [Design]",
+              "RelativeToolTip": "Form7.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T08:07:52.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form9.cs [Design]",
+              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form9.cs",
+              "RelativeDocumentMoniker": "Form9.cs",
+              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form9.cs [Design]",
+              "RelativeToolTip": "Form9.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T08:07:48.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form10.cs [Design]",
+              "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form10.cs",
+              "RelativeDocumentMoniker": "Form10.cs",
+              "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form10.cs [Design]",
+              "RelativeToolTip": "Form10.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T08:07:39.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Form12.cs",
               "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form12.cs",
               "RelativeDocumentMoniker": "Form12.cs",
@@ -145,8 +125,7 @@
               "RelativeToolTip": "Form12.cs",
               "ViewState": "AgIAALkAAAAAAAAAAAAAAMUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-18T06:07:07.541Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-18T06:07:07.541Z"
             },
             {
               "$type": "Document",
@@ -157,12 +136,11 @@
               "ToolTip": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form12.cs [Design]",
               "RelativeToolTip": "Form12.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-18T06:06:58.611Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-01-18T06:06:58.611Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Form11.cs [Design]",
               "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form11.cs",
               "RelativeDocumentMoniker": "Form11.cs",
@@ -174,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "Form5.cs [Design]",
               "DocumentMoniker": "C:\\PJT_CasaBrasil\\PJT_CasaBrasil\\Form5.cs",
               "RelativeDocumentMoniker": "Form5.cs",
